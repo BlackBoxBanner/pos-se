@@ -2,7 +2,7 @@
 
 import {SubmitHandler, useForm} from "react-hook-form"
 import {useState} from "react";
-import axios from "axios";
+import axios, {AxiosError} from "axios";
 import {unknown} from "zod";
 
 export default function LoginForm() {
@@ -25,9 +25,12 @@ export default function LoginForm() {
     axios.post("/api/auth/signin", {
       email: data.email,
       password: data.password
-    }).catch(err => {
-      if (err instanceof Error) {
-        setResError(err.message)
+    }).catch((err: Error | AxiosError) => {
+      if (axios.isAxiosError(err)) {
+        console.log(err.response?.data)
+        setResError(err.response?.data)
+      } else {
+        // Just a stock error
       }
     })
   }

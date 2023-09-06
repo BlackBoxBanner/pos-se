@@ -1,5 +1,3 @@
-import {cookies} from 'next/headers'
-import {decryptData, encryptData} from '@/utils/encrypt'
 import prisma from "@/utils/prisma"
 import {compare, hash} from "bcrypt"
 import {create, read} from '../cookie'
@@ -66,7 +64,7 @@ export async function login(data: LoginType) {
 
   await create({
     name: "SimpleAuthent",
-    value: encryptData(JSON.stringify(user), AUTH_SECRET)
+    value: JSON.stringify(user)
   })
 
   return user

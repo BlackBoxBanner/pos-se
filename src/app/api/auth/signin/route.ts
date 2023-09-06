@@ -20,8 +20,8 @@ export async function POST(request: Request) {
 
   const loginRes = await login({email, password})
   if (loginRes instanceof Error) {
-    return NextResponse.json(loginRes, {
-      status: 400
+    return NextResponse.json(loginRes.message, {
+      status: 400,
     })
   }
 
