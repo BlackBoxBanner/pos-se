@@ -23,12 +23,7 @@ function decryptData<T = string | Record<string, any>>(encryptedData: string, se
   const decryptedData = CryptoJS.AES.decrypt(encryptedData, secretKey).toString(CryptoJS.enc.Utf8);
 
   // if decryptedData is object then parse the data
-  if (typeof decryptedData === 'string') {
-    return decryptedData
-  } else {
-    const result = JSON.parse(decryptedData) as T
-    return result
-  }
+  return JSON.parse(decryptedData) as T
 }
 
-export { encryptData, decryptData }
+export {encryptData, decryptData}

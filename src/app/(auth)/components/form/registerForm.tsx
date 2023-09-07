@@ -1,17 +1,23 @@
 "use client"
-import axios from "axios"
-import {useForm} from "react-hook-form";
+import axios, {AxiosError} from "axios"
+import {useForm,} from "react-hook-form";
+import {useState} from "react";
+import {useRouter} from "next/navigation";
 
 interface RegisterFormProps {
   list: string[]
+  route: string
 }
 
-export default function RegisterForm({list}: RegisterFormProps) {
+export default function RegisterForm({list, route}: RegisterFormProps) {
   interface RegisterForm {
     name: string,
     email: string,
     password: string
+    passwordConfirm: string
   }
+
+  const router = useRouter()
 
   const {
     register,
@@ -21,51 +27,93 @@ export default function RegisterForm({list}: RegisterFormProps) {
     }
   } = useForm<RegisterForm>()
 
+  const [error, setError] = useState("")
+  const [status, setStatus] = useState("")
+
   function onSubmit(data: RegisterForm) {
-    // todo : complete register POST request in "/api/auth/register/route.ts"
-    console.log(list)
+    setStatus("loading")
+    axios.post("/api/auth/register", {
+      name: data.name,
+      email: data.email,
+      password: data.password,
+      passwordConfirm: data.passwordConfirm
+    }).catch((err: Error | AxiosError) => {
+      if (axios.isAxiosError(err)) {
+        setStatus("")
+        setError(err.response?.data)
+      } else {
+        setStatus("")
+      }
+    }).then((value) => {
+      if (value) goRoute()
+    })
   }
 
+  function goRoute() {
+    router.refresh()
+    router.push(route)
+  }
 
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <label htmlFor="name">Name</label>
-        <input
-          type="text"
-          id="name"
-          {...register("name", {
-            required: true,
-          })}
-        />
-        {errors.name?.message}
-        <label htmlFor="email">Email</label>
-        <input
-          type="email"
-          id="email"
-          {...register("email", {
-            required: true,
-            pattern: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
-            validate: (value) => {
-              return list.reduce((previousValue, currentValue) => {
-                if (currentValue == value) return true
-                return previousValue
-              }, false)
-            }
-          })}
-        />
-        {errors.email?.message}
-        <label htmlFor="password">Password</label>
-        <input
-          type="password"
-          id="password"
-          {...register("password", {
-            required: true,
-
-          })}
-        />
-        {errors.password?.message}
-        <button type="submit">Register</button>
+        <div className={``}>
+          <label htmlFor="name">Name</label>
+          <input
+            type="text"
+            id="name"
+            {...register("name", {
+              required: "Name require",
+            })}
+          />
+          {errors.name?.message}
+        </div>
+        <div>
+          <label htmlFor="email">Email</label>
+          <input
+            type="text"
+            id="email"
+            {...register("email", {
+              required: "Email require",
+              validate: (value) => {
+                const result = list.reduce((previousValue, currentValue) => {
+                  if (currentValue == value) return "Email already in used"
+                  return previousValue
+                }, "")
+                return result ? result : true
+              }
+            })}
+          />
+          {errors.email?.message}
+        </div>
+        <div>
+          <label htmlFor="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            {...register("password", {
+              required: "Password require"
+            })}
+          />
+          {errors.password?.message}
+        </div>
+        <div>
+          <label htmlFor="passwordConfirm">Password confirmation</label>
+          <input
+            type="password"
+            id="passwordConfirm"
+            {...register("passwordConfirm", {
+              required: "Password confirmation require",
+              validate: (value, formValues) => {
+                if (value !== formValues.password) return "Password not match"
+                return true
+              }
+            })}
+          />
+          {errors.passwordConfirm?.message}
+        </div>
+        <button type="submit">{`Register ${status}`}</button>
+        {error}
       </form>
     </>
   )

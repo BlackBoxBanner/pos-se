@@ -8,7 +8,7 @@ export default async function Register() {
   }, [] as string[])
   return (
     <>
-      <RegisterForm list={email}/>
+      <RegisterForm list={email} route={"/signin"}/>
     </>
   )
 }

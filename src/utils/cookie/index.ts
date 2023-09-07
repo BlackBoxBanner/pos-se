@@ -1,12 +1,13 @@
 import {cookies} from "next/headers";
 import {decryptData, encryptData} from '@/utils/encrypt'
+import {Session} from "inspector";
 
-interface CookieCreate {
+interface CookieCreate<T = string | Record<string, any>> {
   name: string;
-  value: string;
+  value: T;
 }
 
-export async function create({name, value}: CookieCreate) {
+export async function cCreate<T>({name, value}: CookieCreate<T>) {
   const storeCookies = cookies()
 
   const AUTH_SECRET = process.env.AUTH_SECRET
@@ -15,11 +16,11 @@ export async function create({name, value}: CookieCreate) {
 
   storeCookies.set({
     name,
-    value: encryptData(value, AUTH_SECRET)
+    value: encryptData(JSON.stringify(value), AUTH_SECRET)
   })
 }
 
-export async function read<T>(name: string) {
+export async function cRead<T>(name: string) {
   const storeCookies = cookies()
 
   const AUTH_SECRET = process.env.AUTH_SECRET
@@ -29,4 +30,13 @@ export async function read<T>(name: string) {
   if (!cookie) return null
 
   return decryptData<T>(cookie.value, AUTH_SECRET)
+}
+
+export async function cDelete(name: string) {
+  const storeCookies = cookies()
+  try {
+    storeCookies.delete(name)
+  } catch (error) {
+    throw new Error("Could not delete cookie")
+  }
 }
