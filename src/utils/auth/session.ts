@@ -11,7 +11,7 @@ interface Session {
 export async function useServerSession(): Promise<Session | null> {
   const AUTH_SECRET = process.env.AUTH_SECRET
   if (!AUTH_SECRET) throw new Error("AUTH_SECRET missing in config file")
-  return cRead<Session>("SimpleAuthent")
+  return cRead<Session>("SimpleAuth")
 }
 
 interface RegisterType {
@@ -76,7 +76,7 @@ export async function login(data: LoginType) {
   if (!(await compare(password, user.password))) return new Error("Invalid password")
 
   await cCreate<Session>({
-    name: "SimpleAuthent",
+    name: "SimpleAuth",
     value: {
       id: user.id,
       email: user.email,
@@ -88,5 +88,5 @@ export async function login(data: LoginType) {
 }
 
 export async function logout() {
-  await cDelete("SimpleAuthent")
+  await cDelete("SimpleAuth")
 }
