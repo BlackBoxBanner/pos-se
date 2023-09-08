@@ -1,5 +1,5 @@
 // import all crypto-js libraries as CryptoJS
-import * as CryptoJS from 'crypto-js';
+import CryptoJS from 'crypto-js';
 
 // Encryption function
 function encryptData(unknownData: string | Record<string, any>, secretKey: string): string {
@@ -13,8 +13,7 @@ function encryptData(unknownData: string | Record<string, any>, secretKey: strin
   }
 
   // encrypt data using crypto library
-  const encryptedData = CryptoJS.AES.encrypt(data, secretKey).toString();
-  return encryptedData;
+  return CryptoJS.AES.encrypt(data, secretKey).toString();
 }
 
 // Decryption function
