@@ -10,10 +10,10 @@ export async function cDelete(name: string) {
   const storeCookies = cookies()
   try {
     storeCookies.delete(name)
-    const cok = storeCookies.getAll()
-    cok.map((c) => {
-      storeCookies.delete(c.name)
-    })
+    // const cok = storeCookies.getAll()
+    // cok.map((c) => {
+    //   storeCookies.delete(c.name)
+    // })
   } catch (error) {
     throw new Error("Could not delete cookie")
   }
