@@ -1,4 +1,6 @@
 import type { StorybookConfig } from '@storybook/nextjs';
+import * as path from 'path';
+import { Space_Grotesk } from "next/font/google";
 
 const config: StorybookConfig = {
   stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
@@ -18,7 +20,9 @@ const config: StorybookConfig = {
   ],
   framework: {
     name: '@storybook/nextjs',
-    options: {},
+    options: {
+      nextConfigPath: path.resolve(__dirname, '../next.config.js'),
+    },
   },
   docs: {
     autodocs: 'tag',
