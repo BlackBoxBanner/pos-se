@@ -1,5 +1,5 @@
 import prisma from "@/utils/prisma";
-import Logout from "@/app/(auth)/components/button/logout";
+import Logout from "@/app/components/button/logout";
 
 export default async function UsersList() {
   const users = await prisma.user.findMany()

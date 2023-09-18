@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Logout from "@/app/(auth)/components/button/logout";
+import Logout from "@/app/components/button/logout";
 import {useServerSession} from "@/utils/auth/session";
 
 export default async function Home() {
