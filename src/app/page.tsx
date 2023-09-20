@@ -10,7 +10,7 @@ export default async function Home() {
 		<main className="flex min-h-screen flex-col items-center justify-between p-24 gap-4">
 			<Flex
 				flexDirection={"column"}
-				gap={1}
+				gap={4}
 				className="w-[10rem] h-[10rem] border"
 			>
 				<div>1</div>

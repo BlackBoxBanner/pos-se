@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { twMerge } from "tailwind-merge";
 import { FlexProps } from "./types";
@@ -11,6 +11,9 @@ import {
 	justifyHandler,
 	alignHandler,
 	placeHandler,
+	transitionHandler,
+	paddingHandler,
+	marignHandler,
 } from "./handler";
 
 export default function Flex({
@@ -25,6 +28,9 @@ export default function Flex({
 	justify,
 	align,
 	place,
+	transition,
+	margin,
+	padding,
 	...params
 }: FlexProps) {
 	return (
@@ -39,6 +45,9 @@ export default function Flex({
 				justifyHandler(justify),
 				alignHandler(align),
 				placeHandler(place),
+				transitionHandler(transition),
+				paddingHandler(padding),
+				marignHandler(margin),
 				className
 			)}
 			{...params}

@@ -1,4 +1,4 @@
-import { Align, flexDirProps, GapProps, Grow, Justify, Place, Shrink, Wrap } from "./types";
+import { Align, flexDirProps, GapProps, Grow, Justify, Margin, Padding, Place, Shrink, Transition, Wrap } from "./types";
 
 export function flexDir({ flex, reverse }: flexDirProps) {
   if (flex == "column") return reverse ? "flex-col-reverse" : "flex-col"
@@ -17,12 +17,14 @@ export function gapHandle(gap?: GapProps) {
 }
 
 export function wrapHandler(wrap?: Wrap) {
+  if (wrap == undefined) return "";
   if (wrap == "wrap") return "flex-wrap";
   if (wrap == "reverse") return "flex-wrap-reverse";
   return "flex-nowrap";
 }
 
 export function growHandler(grow?: Grow) {
+  if (grow == undefined) return "";
   return grow ? "grow" : "grow-0"
 }
 
@@ -31,26 +33,83 @@ export function shrinkHandler(shrink?: Shrink) {
 }
 
 export function justifyHandler(props?: Justify) {
+  if (!props) return ""
+  const { content, item, self } = props
   let data = [];
-  if (props?.content) data.push(`justify-${props?.content}`);
-  if (props?.item) data.push(`justify-item-${props?.item}`);
-  if (props?.self) data.push(`justify-self-${props?.self}`);
+  if (content) data.push(`justify-${content}`);
+  if (item) data.push(`justify-item-${item}`);
+  if (self) data.push(`justify-self-${self}`);
   return data.join(' ');
 }
 
 export function alignHandler(props?: Align) {
+  if (!props) return ""
+  const { content, item, self } = props
   let data = [];
-  if (props?.content) data.push(`content-${props?.content}`);
-  if (props?.item) data.push(`items-${props?.item}`);
-  if (props?.self) data.push(`self-${props?.self}`);
+  if (content) data.push(`content-${content}`);
+  if (item) data.push(`items-${item}`);
+  if (self) data.push(`self-${self}`);
   return data.join(' ');
 }
 
 export function placeHandler(props?: Place) {
+  if (!props) return ""
+  const { content, item, self } = props
   let data = [];
-  if (props?.content) data.push(`place-content-${props?.content}`);
-  if (props?.item) data.push(`place-items-${props?.item}`);
-  if (props?.self) data.push(`place-self-${props?.self}`);
+  if (content) data.push(`place-content-${content}`);
+  if (item) data.push(`place-items-${item}`);
+  if (self) data.push(`place-self-${self}`);
   return data.join(' ');
 }
 
+export function transitionHandler(props?: Transition) {
+  if (!props) return ""
+
+  let data = []
+  const { duration, delay, timing, type } = props
+
+  if (!type) return ""
+
+  if (type == "transition") {
+    data.push(`transition`)
+  } else {
+    data.push(`transition-${type}`)
+  }
+  if (timing) data.push(`${timing}`)
+  if (duration) data.push(`duration-${duration.toString()}`)
+  if (delay) data.push(`delay-${delay.toString()}`)
+
+  return data.join(" ")
+}
+
+export function paddingHandler(props?: Padding) {
+  if (!props) return ""
+  if (typeof props === "number") return `p-${props.toString()}`
+
+  const { bottom, left, right, top, x, y } = props
+  let data = []
+  if (x) data.push(`px-${x.toString()}`)
+  if (y) data.push(`py-${y.toString()}`)
+  if (top) data.push(`py-${top.toString()}`)
+  if (bottom) data.push(`pb-${bottom.toString()}`)
+  if (left) data.push(`pl-${left.toString()}`)
+  if (right) data.push(`pr-${right.toString()}`)
+
+  return data
+}
+
+export function marignHandler(props?: Margin) {
+  if (!props) return ""
+  if (typeof props === "number") return `p-${props.toString()}`
+
+  const { bottom, left, right, top, x, y } = props
+  let data = []
+  if (x) data.push(`px-${x.toString()}`)
+  if (y) data.push(`py-${y.toString()}`)
+  if (top) data.push(`py-${top.toString()}`)
+  if (bottom) data.push(`pb-${bottom.toString()}`)
+  if (left) data.push(`pl-${left.toString()}`)
+  if (right) data.push(`pr-${right.toString()}`)
+
+  return data
+}

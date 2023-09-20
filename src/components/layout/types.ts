@@ -39,6 +39,40 @@ export interface Place {
   self?: Self;
 }
 
+export type TransitionTypes = "none" | "all" | "colors" | "opacity" | "transition" | "shadow" | "transform"
+export type TransitionDuration = number
+export type TransitionTiming = "ease-linear" | "ease-in" | "ease-out" | "ease-in-out"
+export type TransitionDelay = number
+
+export interface Transition {
+  duration: TransitionDuration;
+  type?: TransitionTypes;
+  timing?: TransitionTiming
+  delay?: TransitionDelay
+}
+
+export interface FullPadding {
+  x: number;
+  y: number;
+  top: number;
+  left: number;
+  right: number;
+  bottom: number;
+}
+
+export type Padding = number | FullPadding;
+
+export interface FullMargin {
+  x: number;
+  y: number;
+  top: number;
+  left: number;
+  right: number;
+  bottom: number;
+}
+
+export type Margin = number | FullMargin
+
 export interface FlexProps {
   children: ComponentProps<"div">["children"]
   className?: ComponentProps<"div">["className"]
@@ -51,4 +85,7 @@ export interface FlexProps {
   justify?: Justify;
   align?: Align;
   place?: Place;
+  transition?: Transition;
+  padding?: Padding;
+  margin?: Margin;
 }
