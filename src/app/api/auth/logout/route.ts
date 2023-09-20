@@ -1,5 +1,5 @@
 import {NextResponse} from 'next/server';
-import {logout} from "@/utils/auth/session";
+import {logout} from "@./utils/auth/session";
 
 interface PostBody {
 }

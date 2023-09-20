@@ -1,5 +1,5 @@
 import {NextResponse} from 'next/server';
-import {login} from "@/utils/auth/session";
+import {login} from "@./utils/auth/session";
 
 interface PostBody {
   email: string

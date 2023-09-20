@@ -1,4 +1,4 @@
-import prisma from "@/utils/prisma"
+import prisma from "@./utils/prisma"
 import {compare, hash} from "bcrypt"
 import {cCreate, cDelete, cRead} from '../cookie'
 
