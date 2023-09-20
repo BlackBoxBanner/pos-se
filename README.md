@@ -21,9 +21,6 @@
 <img src="https://img.shields.io/badge/Markdown-000000.svg?style&logo=Markdown&logoColor=white" alt="Markdown" />
 <img src="https://img.shields.io/badge/JSON-000000.svg?style&logo=JSON&logoColor=white" alt="JSON" />
 </p>
-<img src="https://img.shields.io/github/languages/top/BlackBoxBanner/pos-se?style&color=5D6D7E" alt="GitHub top language" />
-<img src="https://img.shields.io/github/languages/code-size/BlackBoxBanner/pos-se?style&color=5D6D7E" alt="GitHub code size in bytes" />
-<img src="https://img.shields.io/github/commit-activity/m/BlackBoxBanner/pos-se?style&color=5D6D7E" alt="GitHub commit activity" />
 </div>
 
 ---
