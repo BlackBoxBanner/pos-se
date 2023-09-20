@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Logout from "@/(auth)/components/button/logout";
+import Logout from "@/components/button/logout";
 import { useServerSession } from "@./utils/auth/session";
 import { Flex } from "@./components/layout";
 
