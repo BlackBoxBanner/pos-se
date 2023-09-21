@@ -1,22 +1,16 @@
 import Link from "next/link";
 import Logout from "@/components/button/logout";
 import { useServerSession } from "@./utils/auth/session";
-import { Flex } from "@./components/layout";
 
 export default async function Home() {
 	const session = await useServerSession();
 
 	return (
 		<main className="flex min-h-screen flex-col items-center justify-between p-24 gap-4">
-			<Flex
-				flexDirection={"column"}
-				gap={4}
-				className="w-[10rem] h-[10rem] border"
-			>
-				<div>1</div>
-				<div>1</div>
-				<div>1</div>
-			</Flex>
+			<div className="flex justify-center -space-x-14">
+				<div className="mix-blend-multiply bg-blue-400 w-10 h-10 rounded-full"></div>
+				<div className="mix-blend-multiply bg-pink-400 w-10 h-10 rounded-full"></div>
+			</div>
 			{session ? JSON.stringify(session) : "no session"}
 			<Link href={"/signin"}>signin</Link>
 			<Link href={"/register"}>register</Link>
