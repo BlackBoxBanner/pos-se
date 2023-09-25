@@ -1,5 +1,5 @@
-import RegisterForm from "@/app/components/form/registerForm";
-import prisma from "@/utils/prisma";
+import RegisterForm from "@/components/form/registerForm";
+import prisma from "@./utils/prisma";
 
 export default async function Register() {
   const user = await prisma.user.findMany()

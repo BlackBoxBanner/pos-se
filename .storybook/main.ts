@@ -1,6 +1,5 @@
 import type { StorybookConfig } from '@storybook/nextjs';
 import * as path from 'path';
-import { Space_Grotesk } from "next/font/google";
 
 const config: StorybookConfig = {
   stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
@@ -26,6 +25,17 @@ const config: StorybookConfig = {
   },
   docs: {
     autodocs: 'tag',
+  },
+  webpackFinal: async (config) => {
+    if (config.resolve) {
+      config.resolve.alias = {
+        ...config.resolve.alias,
+        // '@': path.resolve(__dirname, '../src/app'),
+        // "@.": path.resolve(__dirname, '../src'),
+        '@/components': path.resolve(__dirname, '../src/components'),
+      };
+    }
+    return config;
   },
 };
 export default config;

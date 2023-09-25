@@ -1,5 +1,5 @@
 import {NextResponse} from 'next/server';
-import {register} from "@/utils/auth/session";
+import {register} from "@./utils/auth/session";
 
 interface PostBody {
   name: string,
