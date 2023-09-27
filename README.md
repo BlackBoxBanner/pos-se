@@ -28,9 +28,11 @@ cd  pos-se
 
 npm  install
 
+
 ```
 
-### 🎮 Using pos-se
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the
+result.
 
 ```sh
 
@@ -46,7 +48,9 @@ npm  test
 
 ```
 
----
+You can check out
+[the Next.js GitHub repository](https://github.com/vercel/next.js/) - your
+feedback and contributions are welcome!
 
 ## 👩‍💻 Coding Standard
 
