@@ -1,46 +1,59 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with
-[`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# グリル ( GU-RI-RU )
 
-## Getting Started
+This web-based Point of Sale (POS) project is a term assignment assigned by CPE334 - Software Engineering. In this project, I have developed a modern and user-friendly web application designed to streamline and enhance the retail sales process. With a focus on efficiency and ease of use, this POS system provides essential features for businesses to manage inventory, process transactions, and track sales data.
 
-First, run the development server:
+## 🚀 Getting Started
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+### ✔️ Prerequisites
+
+Before you begin, ensure that you have the following prerequisites installed:
+
+1.  node.js [18.18.0](https://nodejs.org/dist/v18.18.0/node-v18.18.0.pkg) or above
+2.  [docker](https://www.docker.com/)
+
+### 📦 Installation
+
+1. Clone the pos-se repository:
+
+```sh
+
+git  clone  https://github.com/BlackBoxBanner/pos-se
+cd  pos-se
+
+```
+
+2. Install the dependencies:
+
+```sh
+
+npm  install
+
+
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 result.
 
-You can start editing the page by modifying `app/page.tsx`. The page
-auto-updates as you edit the file.
+```sh
 
-This project uses
-[`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to
-automatically optimize and load Inter, a custom Google Font.
+npm  run  build  &&  node  dist/main.js
 
-## Learn More
+```
 
-To learn more about Next.js, take a look at the following resources:
+### 🧪 Running Tests
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js
-  features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```sh
+
+npm  test
+
+```
 
 You can check out
 [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your
 feedback and contributions are welcome!
 
-## Deploy on Vercel
+## 👩‍💻 Coding Standard
 
-The easiest way to deploy your Next.js app is to use the
-[Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme)
-from the creators of Next.js.
+Our coding standard follows [standard react rules](https://github.com/pillarstudio/standards/blob/master/reactjs-guidelines.md#basic-rules) and using [prettier](https://prettier.io/) to keep the code format clean.
 
-Check out our
-[Next.js deployment documentation](https://nextjs.org/docs/deployment) for more
-details.
+---
