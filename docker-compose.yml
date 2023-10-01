@@ -1,4 +1,4 @@
-version: "3.1"
+version: '3.1'
 services:
   mongo:
     build: ./mongodb_rs
@@ -8,6 +8,6 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: password
       MONGO_INITDB_DATABASE: pos
       MONGO_REPLICA_HOST: localhost
-      MONGO_REPLICA_PORT: "27017"
+      MONGO_REPLICA_PORT: '27017'
     ports:
       - 27017:27017

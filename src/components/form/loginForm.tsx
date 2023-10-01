@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form'
 import { useState } from 'react'
 import axios, { AxiosError } from 'axios'
 import { useRouter } from 'next/navigation'
+import { wait } from 'next/dist/build/output/log'
 
 interface LoginFormProps {
 	route: string
