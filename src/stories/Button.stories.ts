@@ -28,6 +28,6 @@ export const Primary: Story = {
     },
   },
   args: {
-    children: "Button"
+    children: "Buttons"
   },
 };
