@@ -10,9 +10,103 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// model Template {
+//   id        String   @id @default(auto()) @map("_id") @db.ObjectId
+//   createAt  DateTime @default(now()) @db.Timestamp
+//   updatedAt DateTime @updatedAt @db.Timestamp
+// }
+
+enum Role {
+  OWNER
+  MANAGER
+  EMPLOYEE
+}
+
+model Permision {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  createAt  DateTime @default(now()) @db.Timestamp
+  updatedAt DateTime @updatedAt @db.Timestamp
+
+  User User[]
+}
+
 model User {
-  id       String @id @default(auto()) @map("_id") @db.ObjectId
-  email    String @unique
-  name     String
-  password String
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  email       String   @unique
+  name        String
+  password    String
+  role        Role
+  permisionId String[] @db.ObjectId
+  createAt    DateTime @default(now()) @db.Timestamp
+  updatedAt   DateTime @updatedAt @db.Timestamp
+
+  permision Permision @relation(fields: [permisionId], references: [id])
+
+  Customers Customers[]
+}
+
+model Address {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  phoneHumber Int
+  createAt    DateTime @default(now()) @db.Timestamp
+  updatedAt   DateTime @updatedAt @db.Timestamp
+
+  Customers Customers[]
+}
+
+model Table {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  tableNumber Int      @unique
+  createAt    DateTime @default(now()) @db.Timestamp
+  updatedAt   DateTime @updatedAt @db.Timestamp
+
+  Orders    Orders[]
+  Customers Customers[]
+}
+
+// complete the type
+enum Type {
+  RICE
+}
+
+model Menu {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  image     String?
+  type      Type
+  status    Boolean  @default(false)
+  price     Float    @default(0)
+  createAt  DateTime @default(now()) @db.Timestamp
+  updatedAt DateTime @updatedAt @db.Timestamp
+
+  Orders Orders[]
+}
+
+model Orders {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  tableId   String   @unique @db.ObjectId
+  menuId    String   @db.ObjectId
+  status    Boolean  @default(false)
+  createAt  DateTime @default(now()) @db.Timestamp
+  updatedAt DateTime @updatedAt @db.Timestamp
+
+  table Table @relation(fields: [tableId], references: [id])
+  menu  Menu  @relation(fields: [menuId], references: [id])
+}
+
+model Customers {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  tableId    String   @db.ObjectId
+  userId     String   @db.ObjectId
+  addressId  String   @db.ObjectId
+  takeAway   Boolean  @default(false)
+  createAt   DateTime @default(now()) @db.Timestamp
+  updatedAt  DateTime @updatedAt @db.Timestamp
+  checkOutAt DateTime @updatedAt @db.Timestamp
+
+  table    Table   @relation(fields: [tableId], references: [id])
+  employee User    @relation(fields: [userId], references: [id])
+  address  Address @relation(fields: [addressId], references: [id])
 }
