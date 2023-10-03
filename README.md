@@ -7,7 +7,7 @@ sales process. With a focus on efficiency and ease of use, this POS system
 provides essential features for businesses to manage inventory, process
 transactions, and track sales data.
 
-## 🚀 Getting Started
+## 🚀 Getting Started 🚀
 
 ### ✔️ Prerequisites
 
