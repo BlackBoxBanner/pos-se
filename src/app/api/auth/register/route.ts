@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { register } from '@/utils/auth/session'
+import { RegisterProps, register } from '@/utils/auth/session'
 
 interface PostBody {
 	name: string
@@ -9,30 +9,30 @@ interface PostBody {
 }
 
 export async function POST(request: Request) {
+	// get all headers
 	const requestHeaders = new Headers(request.headers)
+	// get header name "Authorization"
 	const auth = requestHeaders.get('Authorization')
-	// if (!checkAuth(auth!)) {
-	//   return new NextResponse(JSON.stringify("No API_KEY or Unauthorized."), {
-	//     status: 401,
-	//     headers: {"Content-Type": "application/json"},
-	//   });
-	// }
 
-	const { email, password, passwordConfirm, name } =
-		(await request.json()) as PostBody
+	// get body out of body
+	const { email, password, repeat_password, name } =
+		(await request.json()) as RegisterProps
 
+	// register
 	const registerRes = await register({
 		email,
 		password,
 		name,
-		repeat_password: passwordConfirm,
+		repeat_password,
 	})
 
+	// check if registerRes is type Error
 	if (registerRes instanceof Error) {
 		return NextResponse.json(registerRes.message, {
 			status: 400,
 		})
 	}
 
+	// return registerRes
 	return NextResponse.json({ data: registerRes })
 }
