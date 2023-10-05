@@ -2,11 +2,11 @@ import { Address } from "@prisma/client"
 import prisma from "../prisma"
 
 
-type GetAddress = (userId: string) => Promise<Address[]>
+export type GetAddressProps = { userId: string }
+type GetAddress = (props: GetAddressProps) => Promise<Address[]>
 
-export type GetAddressProps = Parameters<GetAddress>
-
-export const getAddress: GetAddress = async (userId) => {
+export const getAddress: GetAddress = async (props) => {
+  const { userId } = props
   if (!userId) throw new Error("No ID provided.")
 
   return await prisma.address.findMany({
@@ -24,11 +24,11 @@ type CreateAddressData = {
   phoneNumber: number
 }
 
-type CreateAddress = (userId: string, data: CreateAddressData) => Promise<Address>
+export type CreateAddressProps = { userId: string, data: CreateAddressData }
+type CreateAddress = (props: CreateAddressProps) => Promise<Address>
 
-export type CreateAddressProps = Parameters<CreateAddress>;
-
-export const createAddress: CreateAddress = async (userId, { name, phoneNumber }) => {
+export const createAddress: CreateAddress = async (props) => {
+  const { userId, data: { name, phoneNumber } } = props
   if (!userId) throw new Error("No ID provided.")
   if (!name) throw new Error("No name provided.")
   if (!phoneNumber) throw new Error("No phone number provided.")
@@ -45,11 +45,11 @@ export const createAddress: CreateAddress = async (userId, { name, phoneNumber }
   })
 }
 
-type DeleteAddress = (id: string) => Promise<Address>
+export type DeleteAddressProps = { id: string }
+type DeleteAddress = (props: DeleteAddressProps) => Promise<Address>
 
-export type DeleteAddressProps = Parameters<DeleteAddress>
-
-export const deleteAddress: DeleteAddress = async (id) => {
+export const deleteAddress: DeleteAddress = async (props) => {
+  const { id } = props
   return await prisma.address.delete({
     where: {
       id
