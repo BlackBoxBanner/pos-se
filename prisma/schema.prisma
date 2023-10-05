@@ -39,7 +39,7 @@ model Address {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   userId      String?  @db.ObjectId
   name        String
-  phoneHumber Int
+  phoneNumber Int
   createAt    DateTime @default(now()) @db.Timestamp
   updatedAt   DateTime @updatedAt @db.Timestamp
 
