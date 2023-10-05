@@ -7,6 +7,7 @@ export interface Session {
 	id: string
 	email: string
 	name: string
+	role: Role
 }
 
 export async function useServerSession(): Promise<Session | null> {
@@ -86,6 +87,7 @@ export async function login({ password, email }: LoginType) {
 			id: user.id,
 			email: user.email,
 			name: user.name,
+			role: user.role,
 		},
 	})
 
