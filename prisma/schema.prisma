@@ -24,6 +24,7 @@ enum Role {
 
 model User {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  addressId String[] @db.ObjectId
   email     String   @unique
   name      String
   password  String
@@ -31,6 +32,7 @@ model User {
   createAt  DateTime @default(now()) @db.Timestamp
   updatedAt DateTime @updatedAt @db.Timestamp
 
+  address   Address     @relation(fields: [addressId], references: [id])
   Customers Customers[]
 }
 
@@ -42,6 +44,7 @@ model Address {
   updatedAt   DateTime @updatedAt @db.Timestamp
 
   Customers Customers[]
+  User      User[]
 }
 
 model Table {
