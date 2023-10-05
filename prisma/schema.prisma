@@ -22,26 +22,14 @@ enum Role {
   EMPLOYEE
 }
 
-model Permision {
+model User {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  email     String   @unique
   name      String
+  password  String
+  role      Role
   createAt  DateTime @default(now()) @db.Timestamp
   updatedAt DateTime @updatedAt @db.Timestamp
-
-  User User[]
-}
-
-model User {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  email       String   @unique
-  name        String
-  password    String
-  role        Role
-  permisionId String[] @db.ObjectId
-  createAt    DateTime @default(now()) @db.Timestamp
-  updatedAt   DateTime @updatedAt @db.Timestamp
-
-  permision Permision @relation(fields: [permisionId], references: [id])
 
   Customers Customers[]
 }

@@ -1,29 +1,25 @@
 import { NextResponse } from 'next/server'
-import { login } from '@/utils/auth/session'
-
-interface PostBody {
-	email: string
-	password: string
-}
+import { LoginType, login } from '@/utils/auth/session'
 
 export async function POST(request: Request) {
+	// get all headers
 	const requestHeaders = new Headers(request.headers)
+	// get header name "Authorization"
 	const auth = requestHeaders.get('Authorization')
-	// if (!checkAuth(auth!)) {
-	//   return new NextResponse(JSON.stringify("No API_KEY or Unauthorized."), {
-	//     status: 401,
-	//     headers: {"Content-Type": "application/json"},
-	//   });
-	// }
 
-	const { email, password } = (await request.json()) as PostBody
+	// get body out of request data
+	const { email, password } = (await request.json()) as LoginType
 
-	const loginRes = await login({ email, password })
-	if (loginRes instanceof Error) {
-		return NextResponse.json(loginRes.message, {
+	// login
+	const user = await login({ email, password })
+
+	// check if users is not type of Error
+	if (user instanceof Error) {
+		return NextResponse.json(user.message, {
 			status: 400,
 		})
 	}
 
-	return NextResponse.json({ data: loginRes })
+	// return user
+	return NextResponse.json({ data: user })
 }
