@@ -1,33 +1,30 @@
-"use client";
+'use client'
 
-import { ComponentProps } from "react";
-import axios, { AxiosError } from "axios";
-import { useRouter } from "next/navigation";
+import { ComponentProps } from 'react'
+import axios, { AxiosError } from 'axios'
+import { useRouter } from 'next/navigation'
+import { Button } from '.'
 
-interface LogoutProps extends ComponentProps<"button"> {}
+interface LogoutProps extends ComponentProps<'button'> {}
 
 export default function Logout(props: LogoutProps) {
-	const router = useRouter();
+	const router = useRouter()
 
 	function clickHandler() {
 		axios
-			.post("/api/auth/logout")
+			.post('/api/auth/logout')
 			.catch((err: Error | AxiosError) => {
 				if (axios.isAxiosError(err)) {
-					console.log(err);
+					console.log(err)
 				} else {
-					throw new Error("Unknown error");
+					throw new Error('Unknown error')
 				}
 			})
 			.finally(() => {
-				router.refresh();
-				router.push("/");
-			});
+				router.refresh()
+				router.push('/')
+			})
 	}
 
-	return (
-		<button onClick={clickHandler} {...props}>
-			{props.children}
-		</button>
-	);
+	return <Button onClick={clickHandler}>{props.children}</Button>
 }

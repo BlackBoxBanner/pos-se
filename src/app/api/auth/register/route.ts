@@ -1,11 +1,10 @@
 import { NextResponse } from 'next/server'
 import { RegisterProps, register } from '@/utils/auth/session'
+import { Role } from '@prisma/client'
 
-interface PostBody {
-	name: string
-	email: string
-	password: string
-	passwordConfirm: string
+export type BodyProps = {
+	data: RegisterProps
+	role?: Role
 }
 
 export async function POST(request: Request) {
@@ -15,16 +14,21 @@ export async function POST(request: Request) {
 	const auth = requestHeaders.get('Authorization')
 
 	// get body out of body
-	const { email, password, repeat_password, name } =
-		(await request.json()) as RegisterProps
+	const {
+		data: { email, password, repeat_password, name },
+		role,
+	} = (await request.json()) as BodyProps
 
 	// register
-	const registerRes = await register({
-		email,
-		password,
-		name,
-		repeat_password,
-	})
+	const registerRes = await register(
+		{
+			email,
+			password,
+			name,
+			repeat_password,
+		},
+		role,
+	)
 
 	// check if registerRes is type Error
 	if (registerRes instanceof Error) {

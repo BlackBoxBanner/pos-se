@@ -14,21 +14,22 @@ export async function useServerSession(): Promise<Session | null> {
 	return cRead<Session>('SimpleAuth')
 }
 
-export type RegisterProps = Pick<User, "name" | "email" | "password"> & {
+export type RegisterProps = Pick<User, 'name' | 'email' | 'password'> & {
 	repeat_password: string
 }
 
 type Register = (data: RegisterProps, role?: Role) => Promise<Error | User>
 
-export const register: Register = async ({ email, name, password, repeat_password }, role = "EMPLOYEE") => {
-
+export const register: Register = async (
+	{ email, name, password, repeat_password },
+	role = 'EMPLOYEE',
+) => {
 	//validate if data is missing
 	if (!email) throw new Error('No email provided')
 	if (!password) throw new Error('No password provided')
 	if (!repeat_password) throw new Error('No repeat password provided')
 	if (!name) throw new Error('No name provided')
-	if (password != repeat_password)
-		return new Error('Password mismatch')
+	if (password != repeat_password) return new Error('Password mismatch')
 
 	// get all user from database
 	const users = await prisma.user.findMany()
@@ -41,7 +42,6 @@ export const register: Register = async ({ email, name, password, repeat_passwor
 	// return error if email is taken by others users.
 	if (emails.includes(email)) return new Error('Email already exists')
 
-
 	try {
 		// try to reate user
 		return await prisma.user.create({
@@ -49,7 +49,7 @@ export const register: Register = async ({ email, name, password, repeat_passwor
 				email,
 				name,
 				password: await hash(password, email.length),
-				role
+				role,
 			},
 		})
 	} catch (error) {
@@ -58,10 +58,9 @@ export const register: Register = async ({ email, name, password, repeat_passwor
 	}
 }
 
-export type LoginType = Pick<User, "email" | "password">
+export type LoginType = Pick<User, 'email' | 'password'>
 
 export async function login({ password, email }: LoginType) {
-
 	//validate if data is missing
 	if (!email) throw new Error('No email provided')
 	if (!password) throw new Error('No password provided')
@@ -90,7 +89,7 @@ export async function login({ password, email }: LoginType) {
 		},
 	})
 
-	// return user session 
+	// return user session
 	return user
 }
 
@@ -98,4 +97,3 @@ export async function logout() {
 	// deleting "SimpleAuth" cookie
 	await cDelete('SimpleAuth')
 }
-

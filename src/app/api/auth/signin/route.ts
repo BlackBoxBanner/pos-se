@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server'
 import { LoginType, login } from '@/utils/auth/session'
 
-
 export async function POST(request: Request) {
 	// get all headers
 	const requestHeaders = new Headers(request.headers)

@@ -3,15 +3,15 @@
  * https://jestjs.io/docs/configuration
  */
 
-import type { Config } from 'jest';
+import type { Config } from 'jest'
 
 const config: Config = {
-  collectCoverage: true,
-  coverageDirectory: "coverage",
-  clearMocks: true,
-  preset: 'ts-jest',
-  testEnvironment: 'node',
-  setupFilesAfterEnv: ['<rootDir>/singleton.ts'],
-};
+	collectCoverage: true,
+	coverageDirectory: 'coverage',
+	clearMocks: true,
+	preset: 'ts-jest',
+	testEnvironment: 'node',
+	setupFilesAfterEnv: ['<rootDir>/singleton.ts'],
+}
 
-export default config;
+export default config
