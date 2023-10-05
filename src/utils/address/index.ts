@@ -17,10 +17,7 @@ export const getAddress: GetAddress = async (props) => {
 	})
 }
 
-type CreateAddressData = {
-	name: string
-	phoneNumber: number
-}
+type CreateAddressData = Pick<Address, 'name' | 'phoneNumber'>
 
 export type CreateAddressProps = { userId: string; data: CreateAddressData }
 type CreateAddress = (props: CreateAddressProps) => Promise<Address>
@@ -51,9 +48,30 @@ type DeleteAddress = (props: DeleteAddressProps) => Promise<Address>
 
 export const deleteAddress: DeleteAddress = async (props) => {
 	const { id } = props
+	if (!id) throw new Error('No ID provided.')
 	return await prisma.address.delete({
 		where: {
 			id,
+		},
+	})
+}
+
+export type UpdateAddressProps = Pick<Address, 'id' | 'name' | 'phoneNumber'>
+type UpdateAddress = (props: UpdateAddressProps) => Promise<Address>
+
+export const updateAddress: UpdateAddress = async (props) => {
+	const { id, name, phoneNumber } = props
+	if (!id) throw new Error('No ID provided.')
+	if (!name) throw new Error('No name provided.')
+	if (!phoneNumber) throw new Error('No phone number provided.')
+
+	return await prisma.address.update({
+		where: {
+			id,
+		},
+		data: {
+			name,
+			phoneNumber,
 		},
 	})
 }

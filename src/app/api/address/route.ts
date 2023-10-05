@@ -4,6 +4,8 @@ import {
 	CreateAddressProps,
 	deleteAddress,
 	DeleteAddressProps,
+	updateAddress,
+	UpdateAddressProps,
 } from '@/utils/address'
 
 export async function POST(request: Request) {
@@ -35,5 +37,20 @@ export async function DELETE(request: Request) {
 			})
 	}
 
+	return NextResponse.json('')
+}
+
+export async function PATCH(request: Request) {
+	// get body out of request data
+	const { id, name, phoneNumber } = (await request.json()) as UpdateAddressProps
+
+	try {
+		return NextResponse.json(await updateAddress({ id, name, phoneNumber }))
+	} catch (error) {
+		if (error instanceof Error)
+			NextResponse.json(error.message, {
+				status: 400,
+			})
+	}
 	return NextResponse.json('')
 }
