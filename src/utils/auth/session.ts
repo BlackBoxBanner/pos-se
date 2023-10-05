@@ -29,7 +29,7 @@ export const register: Register = async (
 	if (!password) throw new Error('No password provided')
 	if (!repeat_password) throw new Error('No repeat password provided')
 	if (!name) throw new Error('No name provided')
-	if (password != repeat_password) return new Error('Password mismatch')
+	if (password != repeat_password) throw new Error('Password mismatch')
 
 	// get all user from database
 	const users = await prisma.user.findMany()
@@ -40,21 +40,21 @@ export const register: Register = async (
 	}, [] as string[])
 
 	// return error if email is taken by others users.
-	if (emails.includes(email)) return new Error('Email already exists')
+	if (emails.includes(email)) throw new Error('Email already exists')
 
 	try {
-		// try to reate user
+		// try to create user
 		return await prisma.user.create({
 			data: {
 				email,
 				name,
 				password: await hash(password, email.length),
-				role,
+				role: role,
 			},
 		})
 	} catch (error) {
 		// catch any error if there is one.
-		return new Error('Could not register')
+		throw new Error('Could not register')
 	}
 }
 
@@ -73,11 +73,11 @@ export async function login({ password, email }: LoginType) {
 	})
 
 	// return error if there is no user.
-	if (!user) return new Error('Invalid user')
+	if (!user) throw new Error('Invalid user')
 
 	// compare if password from database is match with props else return error
 	if (!(await compare(password, user.password)))
-		return new Error('Invalid password')
+		throw new Error('Invalid password')
 
 	// create SimpleAuth cookie store session
 	await cCreate<Session>({

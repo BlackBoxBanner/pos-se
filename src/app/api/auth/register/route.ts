@@ -4,7 +4,7 @@ import { Role } from '@prisma/client'
 
 export type BodyProps = {
 	data: RegisterProps
-	role?: Role
+	role: Role
 }
 
 export async function POST(request: Request) {
