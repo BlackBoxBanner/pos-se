@@ -32,18 +32,26 @@ export const register: Register = async (
 	if (!name) throw new Error('No name provided')
 	if (password != repeat_password) throw new Error('Password mismatch')
 
+	console.log("getting users");
+
 	// get all user from database
-	const users = await prisma.user.findMany()
+	const users = await getUsers()
+
+	console.log("getting email");
 
 	// using reduce to get all email from  into one array.
 	const emails = users.reduce((resut, next) => {
 		return [...resut, next.email]
 	}, [] as string[])
 
+	console.log("check email");
+
 	// return error if email is taken by others users.
 	if (emails.includes(email)) throw new Error('Email already exists')
 
 	try {
+		console.log("creating users");
+
 		// try to create user
 		return await prisma.user.create({
 			data: {
@@ -54,6 +62,8 @@ export const register: Register = async (
 			},
 		})
 	} catch (error) {
+		console.log("running error");
+
 		// catch any error if there is one.
 		throw new Error('Could not register')
 	}
@@ -98,4 +108,21 @@ export async function login({ password, email }: LoginType) {
 export async function logout() {
 	// deleting "SimpleAuth" cookie
 	await cDelete('SimpleAuth')
+}
+
+export type DeleteUserProps = {
+	id: string
+}
+type DeleteUser = (props?: DeleteUserProps) => Promise<void>
+export const deleteUser: DeleteUser = async (props) => {
+	await prisma.user.deleteMany({
+		where: {
+			id: props?.id
+		}
+	})
+}
+
+
+export const getUsers = async () => {
+	return await prisma.user.findMany({})
 }

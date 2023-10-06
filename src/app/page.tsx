@@ -1,6 +1,10 @@
 import { Link } from '@/components/button/Link'
 import Logout from '@/components/button/logout'
 import { useServerSession } from '@/utils/auth/session'
+import { Kanit } from 'next/font/google'
+import { twMerge } from 'tailwind-merge'
+
+const font = Kanit({ weight: '300', style: 'normal', subsets: ['thai'] })
 
 export default async function Home() {
 	const session = await useServerSession()
@@ -12,6 +16,13 @@ export default async function Home() {
 			<Link href={'/register'}>register</Link>
 			<Link href={'/users'}>users</Link>
 			<Logout>logout</Logout>
+			<div className={twMerge(font.className, 'text-[1rem]')}>
+				ข้อมูลส่วนบุคคล
+				หรือข้อความส่วนบุคคลที่ทางโครงการเก็บรวบรวมเกี่ยวกับผู้ใช้
+				จะเป็นข้อมูลที่สามารถระบุตัวตนของท่านได้ ทางโครงการจะทําการเก็บรวบรวม
+				ถ่ายโอน และใช้ข้อมูลส่วนบุคคลประเภทต่าง ๆ
+				ที่เกี่ยวกับผู้ใช้ตามที่โครงการได้จัดกลุ่มไว้ด้วยกัน ดังต่อไปนี้
+			</div>
 		</main>
 	)
 }
