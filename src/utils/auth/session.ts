@@ -57,7 +57,7 @@ export const register: Register = async (
 			data: {
 				email,
 				name,
-				password: await hash(password, email.length),
+				password: await hash(password, 10),
 				role: role,
 			},
 		})
