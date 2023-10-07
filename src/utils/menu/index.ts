@@ -1,5 +1,6 @@
 import { Menu } from '@prisma/client'
 import prisma from '@/utils/prisma'
+import { type } from 'os'
 
 export type GetFilterNameMenuProps = {
 	name?: string
@@ -27,3 +28,19 @@ type SearchMenus = (props: SearchMenuProps) => Menu[]
 export const searchMenus: SearchMenus = ({ menu, name }) => {
 	return menu.filter((item) => item.name.includes(name))
 }
+
+
+export type DeleteMenuProps = {
+	id: string
+}
+
+type DeleteMenu = (props: DeleteMenuProps) => Promise<Menu>
+export const deleteMenu: DeleteMenu = async ({ id }) => {
+	
+	return prisma.menu.delete({
+		where: {
+			id
+		}
+	})
+}
+
