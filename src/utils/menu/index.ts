@@ -7,8 +7,7 @@ export type GetFilterNameMenuProps = {
 
 type GetMenu = (props: GetFilterNameMenuProps) => Promise<Menu[]>
 export const getMenu: GetMenu = async ({ name }) => {
-
-	if(!name) return prisma.menu.findMany({})
+	if (!name) return prisma.menu.findMany({})
 
 	return prisma.menu.findMany({
 		where: {
