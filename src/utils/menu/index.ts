@@ -12,7 +12,7 @@ export type GetFilterNameMenuProps = {
 
 type GetFilterNameMenu = (
 	props: GetFilterNameMenuProps,
-) => Promise<Menu[] | null>
+) => Promise<Menu[]>
 export const getFilterNameMenu: GetFilterNameMenu = async ({ name }) => {
 	return prisma.menu.findMany({
 		where: {
@@ -21,4 +21,14 @@ export const getFilterNameMenu: GetFilterNameMenu = async ({ name }) => {
 			},
 		},
 	})
+}
+
+export type SearchMenuProps = {
+	menu: Menu[]
+	name: string
+}
+
+type SearchMenus = (props: SearchMenuProps) => Menu[]
+export const searchMenus: SearchMenus = ({ menu, name }) => {
+	return menu.filter((item) => item.name.includes(name))
 }
