@@ -1,14 +1,30 @@
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import {
 	createAddress,
 	CreateAddressProps,
 	deleteAddress,
 	DeleteAddressProps,
+	getAddress,
+	GetAddressProps,
 	updateAddress,
 	UpdateAddressProps,
 } from '@/utils/address'
 
-export async function POST(request: Request) {
+export async function GET(request: NextRequest) {
+	const { searchParams } = new URL(request.url)
+	const userId = searchParams.get('userId') as GetAddressProps['userId']
+	// const { userId } = (await request.json()) as GetAddressProps
+	try {
+		return NextResponse.json(await getAddress({ userId }))
+	} catch (error) {
+		if (error instanceof Error)
+			return NextResponse.json(error.message, {
+				status: 400,
+			})
+	}
+}
+
+export async function POST(request: NextRequest) {
 	// get body out of request data
 	const { data, userId } = (await request.json()) as CreateAddressProps
 	try {
@@ -21,7 +37,7 @@ export async function POST(request: Request) {
 	}
 }
 
-export async function DELETE(request: Request) {
+export async function DELETE(request: NextRequest) {
 	// get body out of request data
 	const { id } = (await request.json()) as DeleteAddressProps
 
@@ -35,7 +51,7 @@ export async function DELETE(request: Request) {
 	}
 }
 
-export async function PATCH(request: Request) {
+export async function PATCH(request: NextRequest) {
 	// get body out of request data
 	const { id, name, phoneNumber } = (await request.json()) as UpdateAddressProps
 
