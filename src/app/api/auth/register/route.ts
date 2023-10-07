@@ -19,17 +19,18 @@ export async function POST(request: Request) {
 		role,
 	} = (await request.json()) as BodyProps
 
-
 	try {
-		return NextResponse.json(await register(
-			{
-				email,
-				password,
-				name,
-				repeat_password,
-			},
-			role,
-		))
+		return NextResponse.json(
+			await register(
+				{
+					email,
+					password,
+					name,
+					repeat_password,
+				},
+				role,
+			),
+		)
 	} catch (error: unknown) {
 		// check if registerRes is type Error
 		if (error instanceof Error) {
