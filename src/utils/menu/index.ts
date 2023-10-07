@@ -27,3 +27,21 @@ type SearchMenus = (props: SearchMenuProps) => Menu[]
 export const searchMenus: SearchMenus = ({ menu, name }) => {
 	return menu.filter((item) => item.name.includes(name))
 }
+
+
+export type DeleteMenuProps = {
+	id: string
+}
+
+type DeleteMenu = (props: DeleteMenuProps) => Promise<Menu>
+export const deleteMenu: DeleteMenu = async ({ id }) => {
+	
+	if (!id) throw new Error('No id provided')
+
+	return prisma.menu.delete({
+		where: {
+			id,
+		},
+	})
+}
+
