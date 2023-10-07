@@ -30,6 +30,25 @@ export const createAddress: CreateAddress = async (props) => {
 	if (!userId) throw new Error('No ID provided.')
 	if (!name) throw new Error('No name provided.')
 	if (!phoneNumber) throw new Error('No phone number provided.')
+
+	const users = await prisma.user.findMany({})
+
+	const matchedUsers = users.reduce((previousValue, currentValue) => {
+		currentValue.id == userId && previousValue.push(currentValue.id)
+		return previousValue
+	}, [] as string[])
+
+	if (matchedUsers.length == 0) throw new Error('User not found.')
+
+	const addresses = await prisma.address.findMany({})
+
+	const matchedAddresses = addresses.reduce((previousValue, currentValue) => {
+		currentValue.name == name && previousValue.push(currentValue.name)
+		return previousValue
+	}, [] as string[])
+
+	if (matchedAddresses.length > 0) throw new Error('Address already exists.')
+
 	return prisma.address.create({
 		data: {
 			name,
