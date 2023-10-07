@@ -6,6 +6,7 @@
 		"dev": "next dev",
 		"build": "next build",
 		"start": "next start",
+		"postinstall": "prisma generate",
 		"generate": "dotenv -e .env.local -- npx prisma generate",
 		"push": "dotenv -e .env.local -- npx prisma db push",
 		"studio": "dotenv -e .env.local -- npx prisma studio",
