@@ -5,6 +5,8 @@ import {
 	GetFilterNameMenuProps,
 	getMenu,
 } from '@/utils/menu'
+import { DeleteMenuProps , deleteMenu } from '@/utils/menu'
+
 
 export async function GET(request: NextRequest) {
 	const { searchParams } = new URL(request.url)
@@ -29,6 +31,20 @@ export async function POST(request: NextRequest) {
 		return NextResponse.json(
 			await createMenu({ name, status, type, image, price }),
 		)
+	} catch (error) {
+		if (error instanceof Error)
+			return NextResponse.json(error.message, {
+				status: 400,
+			})
+	}
+}
+
+export async function DELETE(request: NextRequest) {
+	// get body out of request data
+	const { id } = (await request.json()) as DeleteMenuProps
+
+	try {
+		return NextResponse.json(await deleteMenu({ id }))
 	} catch (error) {
 		if (error instanceof Error)
 			return NextResponse.json(error.message, {
