@@ -1,7 +1,7 @@
 import { deleteUser, getUsers } from '@/utils/auth/session'
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from 'next/server'
 
-export async function DELETE(request:NextRequest) {
+export async function DELETE(request: NextRequest) {
 	try {
 		await deleteUser()
 		return NextResponse.json('All user is deleted.')
@@ -12,7 +12,7 @@ export async function DELETE(request:NextRequest) {
 	}
 }
 
-export async function GET(request:NextRequest) {
+export async function GET(request: NextRequest) {
 	try {
 		return NextResponse.json(await getUsers())
 	} catch (error: unknown) {
