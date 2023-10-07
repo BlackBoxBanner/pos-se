@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import { RegisterProps, register } from '@/utils/auth/session'
 import { Role } from '@prisma/client'
 
@@ -7,11 +7,11 @@ export type BodyProps = {
 	role: Role
 }
 
-export async function POST(request: Request) {
-	// get all headers
-	const requestHeaders = new Headers(request.headers)
-	// get header name "Authorization"
-	const auth = requestHeaders.get('Authorization')
+export async function POST(request: NextRequest) {
+	// // get all headers
+	// const requestHeaders = new Headers(request.headers)
+	// // get header name "Authorization"
+	// const auth = requestHeaders.get('Authorization')
 
 	// get body out of body
 	const {
@@ -19,17 +19,18 @@ export async function POST(request: Request) {
 		role,
 	} = (await request.json()) as BodyProps
 
-
 	try {
-		return NextResponse.json(await register(
-			{
-				email,
-				password,
-				name,
-				repeat_password,
-			},
-			role,
-		))
+		return NextResponse.json(
+			await register(
+				{
+					email,
+					password,
+					name,
+					repeat_password,
+				},
+				role,
+			),
+		)
 	} catch (error: unknown) {
 		// check if registerRes is type Error
 		if (error instanceof Error) {

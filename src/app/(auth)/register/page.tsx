@@ -1,4 +1,4 @@
-import RegisterForm from '@/components/form/legisterForm'
+import RegisterForm from '@/components/form/registerForm'
 import prisma from '@/utils/prisma'
 
 export default async function Register() {

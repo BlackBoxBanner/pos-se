@@ -1,14 +1,15 @@
 import { Address } from '@prisma/client'
 import prisma from '../prisma'
 
-export type GetAddressProps = { userId: string }
+export type GetAddressProps = { userId?: string }
 type GetAddress = (props: GetAddressProps) => Promise<Address[]>
 
 export const getAddress: GetAddress = async (props) => {
 	const { userId } = props
-	if (!userId) throw new Error('No ID provided.')
 
-	return await prisma.address.findMany({
+	if (!userId) return prisma.address.findMany({})
+
+	return prisma.address.findMany({
 		where: {
 			User: {
 				id: userId,
@@ -30,7 +31,26 @@ export const createAddress: CreateAddress = async (props) => {
 	if (!userId) throw new Error('No ID provided.')
 	if (!name) throw new Error('No name provided.')
 	if (!phoneNumber) throw new Error('No phone number provided.')
-	return await prisma.address.create({
+
+	const users = await prisma.user.findMany({})
+
+	const matchedUsers = users.reduce((previousValue, currentValue) => {
+		currentValue.id == userId && previousValue.push(currentValue.id)
+		return previousValue
+	}, [] as string[])
+
+	if (matchedUsers.length == 0) throw new Error('User not found.')
+
+	const addresses = await prisma.address.findMany({})
+
+	const matchedAddresses = addresses.reduce((previousValue, currentValue) => {
+		currentValue.name == name && previousValue.push(currentValue.name)
+		return previousValue
+	}, [] as string[])
+
+	if (matchedAddresses.length > 0) throw new Error('Address already exists.')
+
+	return prisma.address.create({
 		data: {
 			name,
 			phoneNumber,
@@ -48,8 +68,18 @@ type DeleteAddress = (props: DeleteAddressProps) => Promise<Address>
 
 export const deleteAddress: DeleteAddress = async (props) => {
 	const { id } = props
+
+	const addresses = await prisma.address.findMany({})
+
+	const matchedAddresses = addresses.reduce((previousValue, currentValue) => {
+		currentValue.id == id && previousValue.push(currentValue.id)
+		return previousValue
+	}, [] as string[])
+
+	if (matchedAddresses.length == 0) throw new Error('Address not found.')
+
 	if (!id) throw new Error('No ID provided.')
-	return await prisma.address.delete({
+	return prisma.address.delete({
 		where: {
 			id,
 		},
@@ -65,7 +95,15 @@ export const updateAddress: UpdateAddress = async (props) => {
 	if (!name) throw new Error('No name provided.')
 	if (!phoneNumber) throw new Error('No phone number provided.')
 
-	return await prisma.address.update({
+	const address = await prisma.address.findUnique({
+		where: {
+			id,
+		},
+	})
+
+	if (!address) throw new Error('Address not found.')
+
+	return prisma.address.update({
 		where: {
 			id,
 		},

@@ -38,7 +38,7 @@ model User {
 model Address {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   userId      String?  @db.ObjectId
-  name        String
+  name        String   @unique
   phoneNumber Int
   createAt    DateTime @default(now()) @db.Timestamp
   updatedAt   DateTime @updatedAt @db.Timestamp
