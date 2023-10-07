@@ -11,17 +11,14 @@ import {
 export async function POST(request: Request) {
 	// get body out of request data
 	const { data, userId } = (await request.json()) as CreateAddressProps
-
 	try {
 		return NextResponse.json(await createAddress({ userId, data }))
 	} catch (error) {
 		if (error instanceof Error)
-			NextResponse.json(error.message, {
+			return NextResponse.json(error.message, {
 				status: 400,
 			})
 	}
-
-	return NextResponse.json('')
 }
 
 export async function DELETE(request: Request) {
@@ -32,12 +29,10 @@ export async function DELETE(request: Request) {
 		return NextResponse.json(await deleteAddress({ id }))
 	} catch (error) {
 		if (error instanceof Error)
-			NextResponse.json(error.message, {
+			return NextResponse.json(error.message, {
 				status: 400,
 			})
 	}
-
-	return NextResponse.json('')
 }
 
 export async function PATCH(request: Request) {
@@ -48,9 +43,8 @@ export async function PATCH(request: Request) {
 		return NextResponse.json(await updateAddress({ id, name, phoneNumber }))
 	} catch (error) {
 		if (error instanceof Error)
-			NextResponse.json(error.message, {
+			return NextResponse.json(error.message, {
 				status: 400,
 			})
 	}
-	return NextResponse.json('')
 }
