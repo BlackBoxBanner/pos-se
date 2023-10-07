@@ -1,4 +1,4 @@
-import { $Enums, Menu } from '@prisma/client'
+import { Menu } from '@prisma/client'
 import prisma from '@/utils/prisma'
 
 export type GetFilterNameMenuProps = {
