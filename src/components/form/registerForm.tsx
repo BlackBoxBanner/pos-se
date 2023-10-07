@@ -77,7 +77,7 @@ export default function RegisterForm({ list, route }: RegisterFormProps) {
 							return result ? result : true
 						},
 						pattern: {
-							value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+							value: /^\S+@\S+\.\S+$/,
 							message: 'Input must be an email',
 						},
 					})}

@@ -8,10 +8,10 @@ export type BodyProps = {
 }
 
 export async function POST(request: NextRequest) {
-	// get all headers
-	const requestHeaders = new Headers(request.headers)
-	// get header name "Authorization"
-	const auth = requestHeaders.get('Authorization')
+	// // get all headers
+	// const requestHeaders = new Headers(request.headers)
+	// // get header name "Authorization"
+	// const auth = requestHeaders.get('Authorization')
 
 	// get body out of body
 	const {
