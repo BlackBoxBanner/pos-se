@@ -10,9 +10,7 @@ export type GetFilterNameMenuProps = {
 	name: string
 }
 
-type GetFilterNameMenu = (
-	props: GetFilterNameMenuProps,
-) => Promise<Menu[]>
+type GetFilterNameMenu = (props: GetFilterNameMenuProps) => Promise<Menu[]>
 export const getFilterNameMenu: GetFilterNameMenu = async ({ name }) => {
 	return prisma.menu.findMany({
 		where: {
