@@ -63,6 +63,15 @@ describe('create address', () => {
 	})
 
 	it("should return address if it's success", async () => {
+		prismaMock.user.findUnique.mockResolvedValue({
+			id: 'asdasdasdasdasd',
+			name: 'mock name',
+			email: 'mock@mail.com',
+			role: 'OWNER',
+			password: 'mock password',
+			createAt: new Date(),
+			updatedAt: new Date(),
+		})
 		prismaMock.address.create.mockResolvedValue(address)
 		await expect(
 			createAddress({
@@ -115,6 +124,7 @@ describe('update address', () => {
 	})
 
 	it("should return address if it's success", async () => {
+		prismaMock.address.findUnique.mockResolvedValue(address)
 		prismaMock.address.update.mockResolvedValue(address)
 		await expect(
 			updateAddress({
@@ -141,6 +151,7 @@ describe('delete address', () => {
 	})
 
 	it("should return address if it's success", async () => {
+		prismaMock.address.findUnique.mockResolvedValue(address)
 		prismaMock.address.delete.mockResolvedValue(address)
 		await expect(
 			deleteAddress({
