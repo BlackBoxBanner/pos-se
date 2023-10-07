@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import { RegisterProps, register } from '@/utils/auth/session'
 import { Role } from '@prisma/client'
 
@@ -7,7 +7,7 @@ export type BodyProps = {
 	role: Role
 }
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
 	// get all headers
 	const requestHeaders = new Headers(request.headers)
 	// get header name "Authorization"

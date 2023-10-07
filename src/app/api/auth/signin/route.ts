@@ -1,7 +1,7 @@
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import { LoginType, login } from '@/utils/auth/session'
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
 	// get all headers
 	const requestHeaders = new Headers(request.headers)
 	// get header name "Authorization"
