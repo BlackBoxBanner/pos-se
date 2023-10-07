@@ -1,12 +1,13 @@
 import { Address } from '@prisma/client'
 import prisma from '../prisma'
 
-export type GetAddressProps = { userId: string }
+export type GetAddressProps = { userId?: string }
 type GetAddress = (props: GetAddressProps) => Promise<Address[]>
 
 export const getAddress: GetAddress = async (props) => {
 	const { userId } = props
-	if (!userId) throw new Error('No ID provided.')
+
+	if (!userId) return prisma.address.findMany({})
 
 	return prisma.address.findMany({
 		where: {
