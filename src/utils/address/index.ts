@@ -68,17 +68,16 @@ type DeleteAddress = (props: DeleteAddressProps) => Promise<Address>
 
 export const deleteAddress: DeleteAddress = async (props) => {
 	const { id } = props
-
-	const addresses = await prisma.address.findMany({})
-
-	const matchedAddresses = addresses.reduce((previousValue, currentValue) => {
-		currentValue.id == id && previousValue.push(currentValue.id)
-		return previousValue
-	}, [] as string[])
-
-	if (matchedAddresses.length == 0) throw new Error('Address not found.')
-
 	if (!id) throw new Error('No ID provided.')
+
+	const matchedAddresses = await prisma.address.findUnique({
+		where: {
+			id,
+		},
+	})
+
+	if (!matchedAddresses) throw new Error('Address not found.')
+
 	return prisma.address.delete({
 		where: {
 			id,
