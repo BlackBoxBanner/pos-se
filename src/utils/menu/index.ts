@@ -1,6 +1,5 @@
 import { Menu } from '@prisma/client'
 import prisma from '@/utils/prisma'
-import { type } from 'os'
 
 export type GetFilterNameMenuProps = {
 	name?: string
