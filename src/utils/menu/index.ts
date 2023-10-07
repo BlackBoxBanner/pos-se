@@ -1,17 +1,15 @@
 import { Menu } from '@prisma/client'
 import prisma from '@/utils/prisma'
 
-type GetMenus = () => Promise<Menu[]>
-export const getMenus: GetMenus = async () => {
-	return prisma.menu.findMany({})
-}
-
 export type GetFilterNameMenuProps = {
-	name: string
+	name?: string
 }
 
-type GetFilterNameMenu = (props: GetFilterNameMenuProps) => Promise<Menu[]>
-export const getFilterNameMenu: GetFilterNameMenu = async ({ name }) => {
+type GetMenu = (props: GetFilterNameMenuProps) => Promise<Menu[]>
+export const getMenu: GetMenu = async ({ name }) => {
+
+	if(!name) return prisma.menu.findMany({})
+
 	return prisma.menu.findMany({
 		where: {
 			name: {
