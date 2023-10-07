@@ -95,6 +95,14 @@ export const updateAddress: UpdateAddress = async (props) => {
 	if (!name) throw new Error('No name provided.')
 	if (!phoneNumber) throw new Error('No phone number provided.')
 
+	const address = await prisma.address.findUnique({
+		where: {
+			id,
+		},
+	})
+
+	if (!address) throw new Error('Address not found.')
+
 	return prisma.address.update({
 		where: {
 			id,
