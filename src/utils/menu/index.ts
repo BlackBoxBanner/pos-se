@@ -36,10 +36,12 @@ export type DeleteMenuProps = {
 type DeleteMenu = (props: DeleteMenuProps) => Promise<Menu>
 export const deleteMenu: DeleteMenu = async ({ id }) => {
 	
+	if (!id) throw new Error('No id provided')
+
 	return prisma.menu.delete({
 		where: {
-			id
-		}
+			id,
+		},
 	})
 }
 
