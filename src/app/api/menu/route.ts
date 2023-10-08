@@ -5,10 +5,10 @@ import {
 	GetFilterNameMenuProps,
 	getMenu,
 	editMenu,
-	EditMenuProps
+	EditMenuProps,
+  DeleteMenuProps,
+  deleteMenu
 } from '@/utils/menu'
-import { DeleteMenuProps , deleteMenu } from '@/utils/menu'
-
 
 export async function GET(request: NextRequest) {
 	const { searchParams } = new URL(request.url)
