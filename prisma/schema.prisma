@@ -58,16 +58,11 @@ model Table {
   Customers Customers[]
 }
 
-// complete the type
-enum Type {
-  RICE
-}
-
 model Menu {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   name      String
   image     String?
-  type      Type
+  type      String
   status    Boolean  @default(false)
   price     Float    @default(0)
   createAt  DateTime @default(now()) @db.Timestamp
