@@ -14,7 +14,6 @@ const config: Config = {
 	setupFilesAfterEnv: ['<rootDir>/singleton.ts'],
 	moduleNameMapper: {
 		'^@/(.*)$': '<rootDir>/src/$1',
-		'^@\\/(.*)$': '<rootDir>/$1',
 	},
 }
 
