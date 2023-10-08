@@ -1,5 +1,5 @@
 import { register } from '@/utils/auth/session'
-import { prismaMock } from '../../singleton'
+import { prismaMock } from '@/../singleton'
 import { User } from '@prisma/client'
 
 describe('register', () => {

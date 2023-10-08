@@ -1,12 +1,4 @@
-import { prismaMock } from '../../singleton'
-import {
-	createAddress,
-	updateAddress,
-	deleteAddress,
-	CreateAddressProps,
-	UpdateAddressProps,
-	DeleteAddressProps,
-} from '@/utils/address'
+import { prismaMock } from '@/../singleton'
 import { createAddress, updateAddress, deleteAddress } from '@/utils/address'
 import { Address } from '@prisma/client'
 
