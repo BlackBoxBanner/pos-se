@@ -43,10 +43,8 @@ export const deleteMenu: DeleteMenu = async ({ id }) => {
 	})
 }
 
-export type CreateMenuProps = Pick<
-	Menu,
-	'name' | 'image' | 'price' | 'status' | 'type'
->
+export type CreateMenuProps = Omit<Menu, 'id' | 'createAt' | 'updatedAt'>
+
 type CreateMenu = (props: CreateMenuProps) => Promise<Menu>
 export const createMenu: CreateMenu = async ({
 	name,
