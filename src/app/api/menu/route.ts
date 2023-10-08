@@ -6,8 +6,8 @@ import {
 	getMenu,
 	editMenu,
 	EditMenuProps,
-  DeleteMenuProps,
-  deleteMenu
+	DeleteMenuProps,
+	deleteMenu,
 } from '@/utils/menu'
 
 export async function GET(request: NextRequest) {
@@ -62,7 +62,7 @@ export async function PATCH(request: NextRequest) {
 		(await request.json()) as EditMenuProps
 	try {
 		return NextResponse.json(
-			await editMenu({ id, name, image, type, status, price}),
+			await editMenu({ id, name, image, type, status, price }),
 		)
 	} catch (error) {
 		if (error instanceof Error)
