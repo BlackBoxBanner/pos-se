@@ -50,6 +50,7 @@ model Address {
 model Table {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   tableNumber Int      @unique
+  seat        Int
   createAt    DateTime @default(now()) @db.Timestamp
   updatedAt   DateTime @updatedAt @db.Timestamp
 
