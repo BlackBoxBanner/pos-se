@@ -4,8 +4,11 @@ import {
 	CreateMenuProps,
 	GetFilterNameMenuProps,
 	getMenu,
+	editMenu,
+	EditMenuProps,
+	DeleteMenuProps,
+	deleteMenu,
 } from '@/utils/menu'
-import { DeleteMenuProps, deleteMenu } from '@/utils/menu'
 
 export async function GET(request: NextRequest) {
 	const { searchParams } = new URL(request.url)
@@ -44,6 +47,23 @@ export async function DELETE(request: NextRequest) {
 
 	try {
 		return NextResponse.json(await deleteMenu({ id }))
+	} catch (error) {
+		if (error instanceof Error)
+			return NextResponse.json(error.message, {
+				status: 400,
+			})
+	}
+}
+
+//EditMenuAPI
+export async function PATCH(request: NextRequest) {
+	// get body out of request data
+	const { id, name, image, type, status, price } =
+		(await request.json()) as EditMenuProps
+	try {
+		return NextResponse.json(
+			await editMenu({ id, name, image, type, status, price }),
+		)
 	} catch (error) {
 		if (error instanceof Error)
 			return NextResponse.json(error.message, {

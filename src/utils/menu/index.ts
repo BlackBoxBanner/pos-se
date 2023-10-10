@@ -69,3 +69,31 @@ export const createMenu: CreateMenu = async ({
 		},
 	})
 }
+
+export type EditMenuProps = Omit<Menu, 'createAt' | 'updatedAt'>
+type EditMenu = (props: EditMenuProps) => Promise<Menu>
+export const editMenu: EditMenu = async ({
+	id,
+	name,
+	type,
+	image,
+	price,
+	status,
+}) => {
+	if (!id) throw new Error('No id provided.')
+	if (!name) throw new Error('No name provided.')
+	if (!type) throw new Error('No type provided.')
+	if (!price) throw new Error('No price provided.')
+	if (!status) throw new Error('No status provided.')
+
+	const menu = await prisma.menu.findUnique({
+		where: { id },
+	})
+
+	if (!menu) throw new Error('No matched ID')
+
+	return prisma.menu.update({
+		where: { id },
+		data: { name, type, image, price, status },
+	})
+}
