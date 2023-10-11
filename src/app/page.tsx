@@ -3,11 +3,18 @@ import Logout from '@/components/button/logout'
 import { useServerSession } from '@/utils/auth/session'
 import { Kanit } from 'next/font/google'
 import { twMerge } from 'tailwind-merge'
+import { useMinio } from '@/utils/minio'
 
 const font = Kanit({ weight: '300', style: 'normal', subsets: ['thai'] })
 
 export default async function Home() {
 	const session = await useServerSession()
+
+	const minioClient = useMinio()
+
+	const test = await minioClient.listBuckets()
+
+	console.log(test)
 
 	return (
 		<main className='flex min-h-screen flex-col items-center justify-center p-24 gap-4'>
