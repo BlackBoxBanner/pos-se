@@ -1,7 +1,7 @@
 import { Address } from '@prisma/client'
 import prisma from '../prisma'
 
-export type GetAddressProps = { userId: string }
+export type GetAddressProps = { userId?: string }
 type GetAddress = (props: GetAddressProps) => Promise<Address[]>
 
 export const getAddress: GetAddress = async (props) => {
@@ -30,7 +30,24 @@ export const createAddress: CreateAddress = async (props) => {
 	if (!userId) throw new Error('No ID provided.')
 	if (!name) throw new Error('No name provided.')
 	if (!phoneNumber) throw new Error('No phone number provided.')
-	return await prisma.address.create({
+
+	const matchedUsers = await prisma.user.findUnique({
+		where: {
+			id: userId,
+		},
+	})
+
+	if (!matchedUsers) throw new Error('User not found.')
+
+	const matchedAddresses = await prisma.address.findUnique({
+		where: {
+			name,
+		},
+	})
+
+	if (matchedAddresses) throw new Error('Address already exists.')
+
+	return prisma.address.create({
 		data: {
 			name,
 			phoneNumber,
@@ -49,7 +66,16 @@ type DeleteAddress = (props: DeleteAddressProps) => Promise<Address>
 export const deleteAddress: DeleteAddress = async (props) => {
 	const { id } = props
 	if (!id) throw new Error('No ID provided.')
-	return await prisma.address.delete({
+
+	const matchedAddresses = await prisma.address.findUnique({
+		where: {
+			id,
+		},
+	})
+
+	if (!matchedAddresses) throw new Error('Address not found.')
+
+	return prisma.address.delete({
 		where: {
 			id,
 		},
@@ -65,7 +91,15 @@ export const updateAddress: UpdateAddress = async (props) => {
 	if (!name) throw new Error('No name provided.')
 	if (!phoneNumber) throw new Error('No phone number provided.')
 
-	return await prisma.address.update({
+	const address = await prisma.address.findUnique({
+		where: {
+			id,
+		},
+	})
+
+	if (!address) throw new Error('Address not found.')
+
+	return prisma.address.update({
 		where: {
 			id,
 		},

@@ -38,7 +38,7 @@ model User {
 model Address {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   userId      String?  @db.ObjectId
-  name        String
+  name        String   @unique
   phoneNumber Int
   createAt    DateTime @default(now()) @db.Timestamp
   updatedAt   DateTime @updatedAt @db.Timestamp
@@ -50,6 +50,7 @@ model Address {
 model Table {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   tableNumber Int      @unique
+  seat        Int
   createAt    DateTime @default(now()) @db.Timestamp
   updatedAt   DateTime @updatedAt @db.Timestamp
 
@@ -57,16 +58,11 @@ model Table {
   Customers Customers[]
 }
 
-// complete the type
-enum Type {
-  RICE
-}
-
 model Menu {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   name      String
   image     String?
-  type      Type
+  type      String
   status    Boolean  @default(false)
   price     Float    @default(0)
   createAt  DateTime @default(now()) @db.Timestamp

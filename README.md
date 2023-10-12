@@ -44,8 +44,15 @@ npm run generate
 4. Create docker instant
 
 ```sh
-docker compose up
+docker compose up -d
 ```
+
+5. Add access key in Minio cloud storage
+
+After running docker up `docker compose up -d` then enter
+`http://localhost:9001` and create access key inside website.
+
+![Alt text](public/readme/minio_access_key.png)
 
 #### Combine all command
 
@@ -53,6 +60,9 @@ docker compose up
 git  clone  https://github.com/BlackBoxBanner/pos-se
 cd  pos-se
 cp .env.example ./.env.local
+```
+
+```sh
 npm install
 npm run generate
 docker compose up

@@ -36,15 +36,14 @@ export const register: Register = async (
 	const users = await getUsers()
 
 	// using reduce to get all email from  into one array.
-	const emails = users.reduce((resut, next) => {
-		return [...resut, next.email]
+	const emails = users.reduce((result, next) => {
+		return [...result, next.email]
 	}, [] as string[])
 
 	// return error if email is taken by others users.
 	if (emails.includes(email)) throw new Error('Email already exists')
 
 	try {
-
 		// try to create user
 		return await prisma.user.create({
 			data: {
@@ -55,7 +54,7 @@ export const register: Register = async (
 			},
 		})
 	} catch (error) {
-		console.log("running error");
+		console.log('running error')
 
 		// catch any error if there is one.
 		throw new Error('Could not register')
@@ -110,11 +109,10 @@ type DeleteUser = (props?: DeleteUserProps) => Promise<void>
 export const deleteUser: DeleteUser = async (props) => {
 	await prisma.user.deleteMany({
 		where: {
-			id: props?.id
-		}
+			id: props?.id,
+		},
 	})
 }
-
 
 export const getUsers = async () => {
 	return await prisma.user.findMany({})

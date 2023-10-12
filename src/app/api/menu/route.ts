@@ -1,22 +1,22 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse, NextRequest } from 'next/server'
 import {
-	createAddress,
-	CreateAddressProps,
-	deleteAddress,
-	DeleteAddressProps,
-	getAddress,
-	GetAddressProps,
-	updateAddress,
-	UpdateAddressProps,
-} from '@/utils/address'
+	createMenu,
+	CreateMenuProps,
+	GetFilterNameMenuProps,
+	getMenu,
+	editMenu,
+	EditMenuProps,
+	DeleteMenuProps,
+	deleteMenu,
+} from '@/utils/menu'
 
 export async function GET(request: NextRequest) {
 	const { searchParams } = new URL(request.url)
-	const userId = searchParams.get('userId') as GetAddressProps['userId']
-	// const { userId } = (await request.json()) as GetAddressProps
+	const name = searchParams.get('name') as GetFilterNameMenuProps['name']
+
 	try {
-		return NextResponse.json(await getAddress({ userId }))
-	} catch (error) {
+		return NextResponse.json(await getMenu({ name }))
+	} catch (error: unknown) {
 		if (error instanceof Error)
 			return NextResponse.json(error.message, {
 				status: 400,
@@ -24,11 +24,15 @@ export async function GET(request: NextRequest) {
 	}
 }
 
+//createMenu
 export async function POST(request: NextRequest) {
 	// get body out of request data
-	const { data, userId } = (await request.json()) as CreateAddressProps
+	const { name, status, type, image, price } =
+		(await request.json()) as CreateMenuProps
 	try {
-		return NextResponse.json(await createAddress({ userId, data }))
+		return NextResponse.json(
+			await createMenu({ name, status, type, image, price }),
+		)
 	} catch (error) {
 		if (error instanceof Error)
 			return NextResponse.json(error.message, {
@@ -39,10 +43,10 @@ export async function POST(request: NextRequest) {
 
 export async function DELETE(request: NextRequest) {
 	// get body out of request data
-	const { id } = (await request.json()) as DeleteAddressProps
+	const { id } = (await request.json()) as DeleteMenuProps
 
 	try {
-		return NextResponse.json(await deleteAddress({ id }))
+		return NextResponse.json(await deleteMenu({ id }))
 	} catch (error) {
 		if (error instanceof Error)
 			return NextResponse.json(error.message, {
@@ -51,12 +55,15 @@ export async function DELETE(request: NextRequest) {
 	}
 }
 
+//EditMenuAPI
 export async function PATCH(request: NextRequest) {
 	// get body out of request data
-	const { id, name, phoneNumber } = (await request.json()) as UpdateAddressProps
-
+	const { id, name, image, type, status, price } =
+		(await request.json()) as EditMenuProps
 	try {
-		return NextResponse.json(await updateAddress({ id, name, phoneNumber }))
+		return NextResponse.json(
+			await editMenu({ id, name, image, type, status, price }),
+		)
 	} catch (error) {
 		if (error instanceof Error)
 			return NextResponse.json(error.message, {

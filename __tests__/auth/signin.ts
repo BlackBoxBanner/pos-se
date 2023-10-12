@@ -1,5 +1,5 @@
 import { login } from '@/utils/auth/session'
-import { prismaMock } from '../../singleton'
+import { prismaMock } from '@/../singleton'
 
 describe('login', () => {
 	afterEach(() => {
