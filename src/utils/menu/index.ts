@@ -57,7 +57,7 @@ export const createMenu: CreateMenu = async ({
 	if (!type) throw new Error('No type provided.')
 	if (!image) throw new Error('No image provided.')
 	if (!price) throw new Error('No price provided.')
-	if (!status) throw new Error('No status provided.')
+	if (status === undefined) throw new Error('No status provided.')
 
 	return prisma.menu.create({
 		data: {
@@ -84,7 +84,7 @@ export const editMenu: EditMenu = async ({
 	if (!name) throw new Error('No name provided.')
 	if (!type) throw new Error('No type provided.')
 	if (!price) throw new Error('No price provided.')
-	if (!status) throw new Error('No status provided.')
+	if (status === undefined) throw new Error('No status provided.')
 
 	const menu = await prisma.menu.findUnique({
 		where: { id },
