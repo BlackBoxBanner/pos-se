@@ -1,4 +1,4 @@
-import { editMenu } from '@/utils/menu/index'
+import { editMenu } from '@/controller/menu'
 import { prismaMock } from '../../singleton'
 import { Menu } from '@prisma/client'
 
