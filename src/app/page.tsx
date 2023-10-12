@@ -1,6 +1,6 @@
 import { Link } from '@/components/button/Link'
 import Logout from '@/components/button/logout'
-import { useServerSession } from '@/utils/auth/session'
+import { useServerSession } from '@/controller/auth/session'
 import { Kanit } from 'next/font/google'
 import { twMerge } from 'tailwind-merge'
 import { useMinio } from '@/utils/minio'

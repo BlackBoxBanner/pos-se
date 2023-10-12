@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { logout } from '@/utils/auth/session'
+import { logout } from '@/controller/auth/session'
 
 export async function POST(request: NextRequest) {
 	await logout().catch((reason) => {

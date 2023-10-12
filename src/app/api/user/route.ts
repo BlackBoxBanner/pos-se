@@ -1,4 +1,4 @@
-import { deleteUser, getUsers } from '@/utils/auth/session'
+import { deleteUser, getUsers } from '@/controller/auth/session'
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function DELETE(request: NextRequest) {

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { RegisterProps, register } from '@/utils/auth/session'
+import { RegisterProps, register } from '@/controller/auth/session'
 import { Role } from '@prisma/client'
 
 export type BodyProps = {

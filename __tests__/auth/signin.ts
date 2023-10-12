@@ -1,4 +1,4 @@
-import { login } from '@/utils/auth/session'
+import { login } from '@/controller/auth/session'
 import { prismaMock } from '@/../singleton'
 
 describe('login', () => {

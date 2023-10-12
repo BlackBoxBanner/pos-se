@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { NextRequest } from 'next/server'
-import { useServerSession } from './utils/auth/session'
+import { useServerSession } from '@/controller/auth/session'
 
 export function middleware(request: NextRequest) {
 	const cookie = request.cookies.get('SimpleAuth')

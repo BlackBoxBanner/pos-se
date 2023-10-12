@@ -1,5 +1,5 @@
 import { prismaMock } from '@/../singleton'
-import { createAddress, updateAddress, deleteAddress } from '@/utils/address'
+import { createAddress, updateAddress, deleteAddress } from '../../src/controller/address'
 import { Address } from '@prisma/client'
 
 const address: Address = {
