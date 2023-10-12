@@ -7,10 +7,12 @@ function randomHexString(): string {
 
 export type UploadImageProps = {
 	buffer: Buffer
+	fileName: string
 }
 type UploadImage = (props: UploadImageProps) => Promise<string | undefined>
-const uploadImage: UploadImage = async ({ buffer }) => {
-	const name = randomHexString()
+const uploadImage: UploadImage = async ({ buffer, fileName }) => {
+	const fileType = fileName.slice(fileName.lastIndexOf('.'))
+	const name = randomHexString() + fileType
 	try {
 		const image = await minioClient.putObject('menu', name, new Buffer(buffer))
 		return name
