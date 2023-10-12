@@ -7,10 +7,10 @@ import {
 import { GetFilterNameMenuProps } from '@/controller/menu'
 
 export async function POST(request: NextRequest) {
-	const { buffer } = (await request.json()) as UploadImageProps
+	const { buffer, fileName } = (await request.json()) as UploadImageProps
 
 	try {
-		return NextResponse.json(await uploadImage({ buffer }))
+		return NextResponse.json(await uploadImage({ buffer, fileName }))
 	} catch (error: unknown) {
 		if (error instanceof Error) {
 			return NextResponse.json(error.message, { status: 400 })
