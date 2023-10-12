@@ -14,7 +14,7 @@ const uploadImage: UploadImage = async ({ buffer, fileName }) => {
 	const fileType = fileName.slice(fileName.lastIndexOf('.'))
 	const name = randomHexString() + fileType
 	try {
-		const image = await minioClient.putObject('menu', name, new Buffer(buffer))
+		await minioClient.putObject('menu', name, Buffer.from(buffer))
 		return name
 	} catch (err) {
 		console.log(err)
