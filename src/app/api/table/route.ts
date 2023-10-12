@@ -1,4 +1,4 @@
-import { CreateTableProps, createTable } from "@/utils/table"
+import { CreateTableProps, createTable } from "@/controller/table"
 import { NextResponse, NextRequest } from "next/server"
 
 
