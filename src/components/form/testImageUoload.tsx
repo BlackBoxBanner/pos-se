@@ -1,4 +1,5 @@
 'use client'
+
 import { Input } from '@/components/input'
 import { Button } from '@/components/button'
 import { FormEvent, useState } from 'react'
@@ -8,6 +9,8 @@ import { fileToBuffer } from '@/controller/fileToBuffer'
 
 export default function TestImageUpload() {
 	const [image, setImage] = useState<File | undefined>()
+	const [search, setSearch] = useState<string>('')
+	const [imageUrl, setImageUrl] = useState<string>('')
 
 	async function onSubmit(e: FormEvent<HTMLFormElement>) {
 		e.preventDefault()
@@ -20,6 +23,20 @@ export default function TestImageUpload() {
 			})
 
 			console.log(url.data)
+		} catch (err: unknown) {
+			if (axios.isAxiosError(err)) {
+				console.log(err)
+			}
+		}
+	}
+
+	async function onSearch(e: FormEvent<HTMLFormElement>) {
+		e.preventDefault()
+		if (!search) return
+
+		try {
+			const res = await axios.get(`/api/image?name=${search}`)
+			setImageUrl(res.data)
 		} catch (err: unknown) {
 			if (axios.isAxiosError(err)) {
 				console.log(err)
@@ -48,6 +65,19 @@ export default function TestImageUpload() {
 						className={twMerge(`aspect-auto h-60`)}
 					/>
 				</div>
+			)}
+			<div>
+				<form onSubmit={onSearch}>
+					<Input
+						label={'image name'}
+						id={'name'}
+						onChange={(event) => setSearch(event.target.value)}
+					/>
+					<Button type={'submit'}>search</Button>
+				</form>
+			</div>
+			{imageUrl && (
+				<img src={imageUrl} alt='' className={twMerge(`aspect-auto h-60`)} />
 			)}
 		</div>
 	)
