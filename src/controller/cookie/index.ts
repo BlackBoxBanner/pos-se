@@ -1,5 +1,5 @@
 import { cookies } from 'next/headers'
-import { create, verify } from '@/utils/encrypt/jwt'
+import { create, verify } from '@/controller/encrypt/jwt'
 
 interface CookieCreate<T = string | Record<string, any>> {
 	name: string

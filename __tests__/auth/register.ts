@@ -1,4 +1,4 @@
-import { register } from '@/utils/auth/session'
+import { register } from '@/controller/auth/session'
 import { prismaMock } from '@/../singleton'
 import { User } from '@prisma/client'
 

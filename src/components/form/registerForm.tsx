@@ -3,7 +3,7 @@ import axios, { AxiosError } from 'axios'
 import { useForm } from 'react-hook-form'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { RegisterProps } from '@/utils/auth/session'
+import { RegisterProps } from '@/controller/auth/session'
 import { Input } from '../input'
 import { BodyProps } from '@/app/api/auth/register/route'
 

@@ -6,7 +6,7 @@ import axios, { AxiosError } from 'axios'
 import { useRouter } from 'next/navigation'
 import { Input } from '../input'
 import { Button } from '../button'
-import { LoginType } from '@/utils/auth/session'
+import { LoginType } from '@/controller/auth/session'
 
 interface LoginFormProps {
 	route: string

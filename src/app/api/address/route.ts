@@ -8,7 +8,7 @@ import {
 	GetAddressProps,
 	updateAddress,
 	UpdateAddressProps,
-} from '@/utils/address'
+} from '../../../controller/address'
 
 export async function GET(request: NextRequest) {
 	const { searchParams } = new URL(request.url)

@@ -1,5 +1,5 @@
 import { Address } from '@prisma/client'
-import prisma from '../prisma'
+import prisma from '../../utils/prisma'
 
 export type GetAddressProps = { userId?: string }
 type GetAddress = (props: GetAddressProps) => Promise<Address[]>

@@ -1,4 +1,4 @@
-import { deleteMenu } from '@/utils/menu/index'
+import { deleteMenu } from '@/controller/menu/index'
 import { prismaMock } from '../../singleton'
 import { Menu } from '@prisma/client'
 

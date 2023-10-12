@@ -1,16 +1,17 @@
 import { Link } from '@/components/button/Link'
 import Logout from '@/components/button/logout'
-import { useServerSession } from '@/utils/auth/session'
+import { useServerSession } from '@/controller/auth/session'
 import { Kanit } from 'next/font/google'
 import { twMerge } from 'tailwind-merge'
-import { useMinio } from '@/utils/minio'
+import { useMinio, minioClient } from '@/utils/minio'
+import TestImageUpload from '@/components/form/testImageUoload'
 
 const font = Kanit({ weight: '300', style: 'normal', subsets: ['thai'] })
 
 export default async function Home() {
 	const session = await useServerSession()
 
-	const minioClient = useMinio()
+	// const minioClient = useMinio()
 
 	const test = await minioClient.listBuckets()
 
@@ -30,6 +31,7 @@ export default async function Home() {
 				ถ่ายโอน และใช้ข้อมูลส่วนบุคคลประเภทต่าง ๆ
 				ที่เกี่ยวกับผู้ใช้ตามที่โครงการได้จัดกลุ่มไว้ด้วยกัน ดังต่อไปนี้
 			</div>
+			<TestImageUpload />
 		</main>
 	)
 }

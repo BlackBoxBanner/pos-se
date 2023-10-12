@@ -8,7 +8,7 @@ import {
 	EditMenuProps,
 	DeleteMenuProps,
 	deleteMenu,
-} from '@/utils/menu'
+} from '../../../controller/menu'
 
 export async function GET(request: NextRequest) {
 	const { searchParams } = new URL(request.url)

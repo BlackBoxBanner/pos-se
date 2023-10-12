@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { LoginType, login } from '@/utils/auth/session'
+import { LoginType, login } from '@/controller/auth/session'
 
 export async function POST(request: NextRequest) {
 	// // get all headers
