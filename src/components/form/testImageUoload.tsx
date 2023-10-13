@@ -5,7 +5,7 @@ import { Button } from '@/components/button'
 import { FormEvent, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { axiosInstance } from '@/utils/auth'
-import { AxiosError, isAxiosError } from 'axios'
+import { isAxiosError } from 'axios'
 import { fileToBuffer } from '@/controller/fileToBuffer'
 
 export default function TestImageUpload() {
