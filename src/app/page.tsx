@@ -18,7 +18,7 @@ export default async function Home() {
 	console.log(test)
 
 	return (
-		<main className='flex min-h-screen flex-col items-center justify-center p-24 gap-4'>
+		<main className='flex min-h-screen flex-col items-center justify-center p-24 gap-4 font-Space-Grotesk'>
 			{session ? JSON.stringify(session) : 'no session'}
 			<Link href={'/signin'}>signin</Link>
 			<Link href={'/register'}>register</Link>

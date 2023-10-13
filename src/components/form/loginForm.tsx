@@ -2,11 +2,12 @@
 
 import { useForm } from 'react-hook-form'
 import { useState } from 'react'
-import axios, { AxiosError } from 'axios'
 import { useRouter } from 'next/navigation'
 import { Input } from '../input'
 import { Button } from '../button'
 import { LoginType } from '@/controller/auth/session'
+import { axiosInstance } from '@/utils/auth'
+import { AxiosError, isAxiosError } from 'axios'
 
 interface LoginFormProps {
 	route: string
@@ -26,13 +27,13 @@ export default function LoginForm({ route }: LoginFormProps) {
 
 	function onSubmit(data: LoginType) {
 		setStatus('loading')
-		axios
-			.post('/api/auth/signin', {
+		axiosInstance
+			.post('/auth/signin', {
 				email: data.email,
 				password: data.password,
 			})
 			.catch((err: Error | AxiosError) => {
-				if (axios.isAxiosError(err)) {
+				if (isAxiosError(err)) {
 					setStatus('')
 					setResError(err.response?.data)
 				} else {
