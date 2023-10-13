@@ -8,10 +8,15 @@ import {
 	EditMenuProps,
 	DeleteMenuProps,
 	deleteMenu,
-} from '../../../controller/menu'
+} from '@/controller/menu'
+import { apiAuth } from '@/utils/auth'
 
 export async function GET(request: NextRequest) {
+	const auth = apiAuth(request)
+	if (auth) return auth
+
 	const { searchParams } = new URL(request.url)
+
 	const name = searchParams.get('name') as GetFilterNameMenuProps['name']
 
 	try {
@@ -26,6 +31,9 @@ export async function GET(request: NextRequest) {
 
 //createMenu
 export async function POST(request: NextRequest) {
+	const auth = apiAuth(request)
+	if (auth) return auth
+
 	// get body out of request data
 	const { name, status, type, image, price } =
 		(await request.json()) as CreateMenuProps
@@ -42,6 +50,9 @@ export async function POST(request: NextRequest) {
 }
 
 export async function DELETE(request: NextRequest) {
+	const auth = apiAuth(request)
+	if (auth) return auth
+
 	// get body out of request data
 	const { id } = (await request.json()) as DeleteMenuProps
 
@@ -57,6 +68,9 @@ export async function DELETE(request: NextRequest) {
 
 //EditMenuAPI
 export async function PATCH(request: NextRequest) {
+	const auth = apiAuth(request)
+	if (auth) return auth
+
 	// get body out of request data
 	const { id, name, image, type, status, price } =
 		(await request.json()) as EditMenuProps
