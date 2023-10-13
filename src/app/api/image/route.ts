@@ -5,8 +5,12 @@ import {
 	UploadImageProps,
 } from '@/controller/image/uploader'
 import { GetFilterNameMenuProps } from '@/controller/menu'
+import { apiAuth } from '@/utils/auth'
 
 export async function POST(request: NextRequest) {
+	const auth = apiAuth(request)
+	if (auth) return auth
+
 	const { buffer, fileName } = (await request.json()) as UploadImageProps
 
 	try {
@@ -21,6 +25,9 @@ export async function POST(request: NextRequest) {
 }
 
 export async function GET(request: NextRequest) {
+	const auth = apiAuth(request)
+	if (auth) return auth
+
 	const { searchParams } = new URL(request.url)
 	const name = searchParams.get('name') as GetFilterNameMenuProps['name']
 
