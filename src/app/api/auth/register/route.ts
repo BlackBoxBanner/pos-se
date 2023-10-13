@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { RegisterProps, register } from '@/controller/auth/session'
 import { Role } from '@prisma/client'
+import { apiAuth } from '@/utils/auth'
 
 export type BodyProps = {
 	data: RegisterProps
@@ -8,10 +9,8 @@ export type BodyProps = {
 }
 
 export async function POST(request: NextRequest) {
-	// // get all headers
-	// const requestHeaders = new Headers(request.headers)
-	// // get header name "Authorization"
-	// const auth = requestHeaders.get('Authorization')
+	const auth = apiAuth(request)
+	if (auth) return auth
 
 	// get body out of body
 	const {

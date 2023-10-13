@@ -8,12 +8,16 @@ import {
 	GetAddressProps,
 	updateAddress,
 	UpdateAddressProps,
-} from '../../../controller/address'
+} from '@/controller/address'
+import { apiAuth } from '@/utils/auth'
 
 export async function GET(request: NextRequest) {
+	const auth = apiAuth(request)
+	if (auth) return auth
+
 	const { searchParams } = new URL(request.url)
 	const userId = searchParams.get('userId') as GetAddressProps['userId']
-	// const { userId } = (await request.json()) as GetAddressProps
+
 	try {
 		return NextResponse.json(await getAddress({ userId }))
 	} catch (error) {
@@ -25,8 +29,12 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+	const auth = apiAuth(request)
+	if (auth) return auth
+
 	// get body out of request data
 	const { data, userId } = (await request.json()) as CreateAddressProps
+
 	try {
 		return NextResponse.json(await createAddress({ userId, data }))
 	} catch (error) {
@@ -38,6 +46,9 @@ export async function POST(request: NextRequest) {
 }
 
 export async function DELETE(request: NextRequest) {
+	const auth = apiAuth(request)
+	if (auth) return auth
+
 	// get body out of request data
 	const { id } = (await request.json()) as DeleteAddressProps
 
@@ -52,6 +63,9 @@ export async function DELETE(request: NextRequest) {
 }
 
 export async function PATCH(request: NextRequest) {
+	const auth = apiAuth(request)
+	if (auth) return auth
+
 	// get body out of request data
 	const { id, name, phoneNumber } = (await request.json()) as UpdateAddressProps
 
