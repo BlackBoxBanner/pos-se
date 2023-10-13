@@ -9,16 +9,54 @@ export const createTable: CreateTable = async ({ tableNumber, seat }) => {
 	if (!seat) throw new Error('No seat provided.')
 
 	// check a table to prevent duplicate table
-	const existingTable = await prisma.table.findUnique({
-		where: { tableNumber },
-	})
+	const existingTable = await getTable({ tableNumber })
 
-	if (!!existingTable) throw new Error('Already have this tableNumber.')
+	if (existingTable) throw new Error('Already have this tableNumber.')
 
 	return prisma.table.create({
 		data: {
 			tableNumber,
 			seat,
+		},
+	})
+}
+
+export type DeleteTableProps = {
+	id: string
+}
+
+type DeleteTable = (props: DeleteTableProps) => Promise<Table>
+export const deleteTable: DeleteTable = async ({ id }) => {
+	if (!id && id !== undefined) throw new Error('No id provided.')
+
+	const table = await getTable({ id })
+
+	if (!table) throw new Error('No table found.')
+
+	return prisma.table.delete({
+		where: { id },
+	})
+}
+
+export type GetTableProps = { id?: string; tableNumber?: number }
+type GetTable = (props: GetTableProps) => Promise<Table | null>
+
+export const getTable: GetTable = async ({ id, tableNumber }) => {
+	if (!id && !tableNumber) throw new Error('No id or tableNumber provided.')
+	if (id && tableNumber)
+		throw new Error('You can only provide id or tableNumber.')
+
+	if (tableNumber) {
+		return prisma.table.findUnique({
+			where: {
+				tableNumber,
+			},
+		})
+	}
+
+	return prisma.table.findUnique({
+		where: {
+			id,
 		},
 	})
 }
