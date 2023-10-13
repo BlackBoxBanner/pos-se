@@ -60,3 +60,27 @@ export const getTable: GetTable = async ({ id, tableNumber }) => {
 		},
 	})
 }
+
+export type EditTableProps = Omit<Table, 'createAt | updateAt'>
+type EditTable = (props: EditTableProps) => Promise<Table>
+
+export const editTable: EditTable = async ({ id,tableNumber,seat }) => {
+
+	if (!id) throw new Error('No ID provided')
+	if (!tableNumber) throw new Error('No Table Number provided')
+	if (!seat) throw new Error('No seat provided')
+
+
+	const table = await prisma.menu.findUnique({
+		where: { id },
+	})
+
+	if (!table) throw new Error('No matching table found')
+
+	return prisma.table.update({
+		where : { id },
+		data : {tableNumber,seat},
+
+	})
+	
+}
