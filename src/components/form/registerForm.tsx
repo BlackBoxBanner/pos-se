@@ -1,5 +1,6 @@
 'use client'
-import axios, { AxiosError } from 'axios'
+import { axiosInstance } from '@/utils/auth'
+import { AxiosError, isAxiosError } from 'axios'
 import { useForm } from 'react-hook-form'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
@@ -26,8 +27,8 @@ export default function RegisterForm({ list, route }: RegisterFormProps) {
 
 	function onSubmit(data: RegisterProps) {
 		setStatus('loading')
-		axios
-			.post<any, any, BodyProps>('/api/auth/register', {
+		axiosInstance
+			.post<any, any, BodyProps>('/auth/register', {
 				data: {
 					name: data.name,
 					email: data.email,
@@ -37,7 +38,7 @@ export default function RegisterForm({ list, route }: RegisterFormProps) {
 				role: 'OWNER',
 			})
 			.catch((err: Error | AxiosError) => {
-				if (axios.isAxiosError(err)) {
+				if (isAxiosError(err)) {
 					setError(err.response?.data)
 				}
 				setStatus('')

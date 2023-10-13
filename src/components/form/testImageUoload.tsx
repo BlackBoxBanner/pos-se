@@ -4,7 +4,8 @@ import { Input } from '@/components/input'
 import { Button } from '@/components/button'
 import { FormEvent, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
-import axios from 'axios'
+import { axiosInstance } from '@/utils/auth'
+import { AxiosError, isAxiosError } from 'axios'
 import { fileToBuffer } from '@/controller/fileToBuffer'
 
 export default function TestImageUpload() {
@@ -17,14 +18,12 @@ export default function TestImageUpload() {
 		if (!image) return
 
 		try {
-			const url = await axios.post('/api/image', {
+			await axiosInstance.post('/image', {
 				fileName: image?.name,
 				buffer: await fileToBuffer(image),
 			})
-
-			console.log(url.data)
 		} catch (err: unknown) {
-			if (axios.isAxiosError(err)) {
+			if (isAxiosError(err)) {
 				console.log(err)
 			}
 		}
@@ -35,10 +34,14 @@ export default function TestImageUpload() {
 		if (!search) return
 
 		try {
-			const res = await axios.get(`/api/image?name=${search}`)
+			const res = await axiosInstance.get(`/image`, {
+				params: {
+					name: search,
+				},
+			})
 			setImageUrl(res.data)
 		} catch (err: unknown) {
-			if (axios.isAxiosError(err)) {
+			if (isAxiosError(err)) {
 				console.log(err)
 			}
 		}
