@@ -1,8 +1,7 @@
 import '../index.css'
 import type { Metadata } from 'next'
 import { Space_Grotesk } from 'next/font/google'
-
-const inter = Space_Grotesk({ subsets: ['latin'] })
+import { ReactNode } from 'react'
 
 export const metadata: Metadata = {
 	title: 'POS',
@@ -10,14 +9,10 @@ export const metadata: Metadata = {
 		'CPE334 - Software Engineer term project. The topic is POS ( Point of sale ) ',
 }
 
-export default function RootLayout({
-	children,
-}: {
-	children: React.ReactNode
-}) {
+export default function RootLayout({ children }: { children: ReactNode }) {
 	return (
 		<html lang='en'>
-			<body className={inter.className}>{children}</body>
+			<body>{children}</body>
 		</html>
 	)
 }

@@ -1,7 +1,11 @@
 import { deleteUser, getUsers } from '@/controller/auth/session'
 import { NextRequest, NextResponse } from 'next/server'
+import { apiAuth } from '@/utils/auth'
 
 export async function DELETE(request: NextRequest) {
+	const auth = apiAuth(request)
+	if (auth) return auth
+
 	try {
 		await deleteUser()
 		return NextResponse.json('All user is deleted.')
@@ -13,6 +17,9 @@ export async function DELETE(request: NextRequest) {
 }
 
 export async function GET(request: NextRequest) {
+	const auth = apiAuth(request)
+	if (auth) return auth
+
 	try {
 		return NextResponse.json(await getUsers())
 	} catch (error: unknown) {
